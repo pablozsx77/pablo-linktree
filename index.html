@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pablo Silva Ferreira · Dev & Automações com IA</title>
+<meta name="description" content="Pablo Silva Ferreira · Desenvolvedor de Sistemas e Automações com IA · N8N, Agentes de IA, Monitoramento NOC">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E1116;
+    --bg-alt: #12161D;
+    --panel: #161B23;
+    --line: #232A35;
+    --text: #E8EAED;
+    --text-dim: #8B93A1;
+    --accent: #3D8BFF;
+    --accent-dim: #1A4A99;
+    --accent-soft: rgba(61,139,255,0.10);
+    --danger: #FF6B6B;
+    --radius: 10px;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+    height:100%;
+  }
+  body{
+    height:100%;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(61,139,255,0.07), transparent 45%),
+      radial-gradient(circle at 90% 20%, rgba(61,139,255,0.05), transparent 40%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  ::selection{ background: var(--accent); color:#04110C; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 22px 90px;
+  }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{
+    padding:56px 0 34px;
+  }
+  .term{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.2), 0 20px 60px -20px rgba(0,229,160,0.08);
+  }
+  .term-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--bg-alt);
+    border-bottom:1px solid var(--line);
+  }
+  .term-dot{width:10px; height:10px; border-radius:50%;}
+  .term-dot.r{background:#5c5c5c;}
+  .term-dot.y{background:#5c5c5c;}
+  .term-dot.g{background:#5c5c5c;}
+  .term-path{
+    margin-left:8px;
+    font-family:var(--sans);
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .term-body{
+    padding:22px 18px 26px;
+    font-family:var(--sans);
+    font-size:14px;
+  }
+  .term-name{
+    font-size:clamp(26px, 6vw, 34px);
+    font-weight:700;
+    color:var(--text);
+    margin:10px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .caret{
+    display:inline-block;
+    width:9px; height:1.05em;
+    background:var(--accent);
+    vertical-align:text-bottom;
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .term-role{
+    font-size:15px;
+    color:var(--accent);
+    margin-bottom:4px;
+  }
+  .term-loc{
+    font-size:12.5px;
+    color:var(--text-dim);
+  }
+
+  .hero-tagline{
+    margin-top:22px;
+    font-size:15.5px;
+    color:var(--text-dim);
+    max-width:52ch;
+  }
+
+  /* ---------- LINK LIST (linktree core) ---------- */
+  .links{
+    margin-top:8px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .link-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:2px solid var(--accent-dim);
+    border-radius:var(--radius);
+    text-decoration:none;
+    transition:border-color .18s ease, transform .18s ease, background .18s ease;
+  }
+  .link-card:hover, .link-card:focus-visible{
+    border-color:var(--accent-dim);
+    border-left-color:var(--accent);
+    background:var(--bg-alt);
+    transform:translateY(-1px);
+  }
+  .link-card:active{ transform:translateY(0); }
+  .link-text{ flex:1; min-width:0; }
+  .link-title{ font-weight:600; font-size:15px; }
+  .link-sub{ font-size:12.5px; color:var(--text-dim); margin-top:1px; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ margin-top:56px; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:18px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .section-tag{
+    font-family:var(--sans);
+    font-size:12px;
+    color:var(--accent);
+  }
+  .section-title{
+    font-size:19px;
+    font-weight:700;
+  }
+
+  /* ---------- PIPELINE / EXPERIENCE ---------- */
+  .pipeline{
+    position:relative;
+    padding-left:26px;
+  }
+  .pipeline::before{
+    content:"";
+    position:absolute;
+    left:6px; top:6px; bottom:6px;
+    width:1px;
+    background:linear-gradient(to bottom, var(--accent-dim), var(--line) 90%);
+  }
+  .node{
+    position:relative;
+    padding-bottom:28px;
+  }
+  .node:last-child{ padding-bottom:0; }
+  .node::before{
+    content:"";
+    position:absolute;
+    left:-26px; top:5px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent);
+  }
+  .node.active::before{
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  .node-title{ font-weight:700; font-size:15.5px; }
+  .node-meta{
+    font-family:var(--sans);
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-top:3px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 10px;
+  }
+  .badge-live{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    color:var(--accent);
+  }
+  .badge-live .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--accent);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; } 50%{ opacity:.35; }
+  }
+  .node-desc{
+    margin-top:10px;
+    font-size:14px;
+    color:var(--text-dim);
+    padding-left:0;
+  }
+  .node-desc li{
+    list-style:none;
+    position:relative;
+    padding-left:16px;
+    margin-top:6px;
+  }
+  .node-desc li::before{
+    content:"";
+    position:absolute;
+    left:2px;
+    top:9px;
+    width:5px;
+    height:5px;
+    border-radius:1px;
+    background:var(--accent);
+    transform:rotate(45deg);
+  }
+
+  /* ---------- SKILLS GRID ---------- */
+  .skill-groups{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .skill-group-label{
+    font-family:var(--sans);
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-bottom:9px;
+  }
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    font-size:13px;
+    padding:7px 12px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    background:var(--bg-alt);
+    color:var(--text);
+  }
+  .chip.dim{ color:var(--text-dim); }
+
+  /* ---------- PROJECT CARD ---------- */
+  .project{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .project-name{ font-size:17px; font-weight:700; }
+  .project-type{
+    font-family:var(--sans);
+    font-size:11.5px;
+    color:var(--accent);
+    margin-top:2px;
+  }
+  .project-mods{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .mod{
+    padding:12px 13px;
+    background:var(--bg-alt);
+    border-radius:8px;
+    border:1px solid var(--line);
+  }
+  .mod-name{ font-size:13px; font-weight:600; color:var(--accent); font-family:var(--sans);}
+  .mod-desc{ font-size:13px; color:var(--text-dim); margin-top:4px; }
+
+  /* ---------- LANGUAGES ---------- */
+  .lang-row{ display:flex; flex-direction:column; gap:14px; }
+  .lang-item{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .lang-name{ font-size:14.5px; font-weight:600; }
+  .lang-bar-track{
+    flex:1;
+    max-width:220px;
+    height:6px;
+    background:var(--line);
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .lang-bar-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:99px;
+    width:0%;
+    transition:width 1s cubic-bezier(.4,0,.2,1);
+  }
+  .lang-pct{ font-family:var(--sans); font-size:12px; color:var(--text-dim); width:70px; text-align:right; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:70px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    font-family:var(--sans);
+    font-size:12px;
+    color:var(--text-dim);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  /* dark/light token overrides kept for future use; page is intentionally single-theme (terminal aesthetic) */
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="term">
+      <div class="term-bar">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-path">~/pablo-silva/zsh</span>
+      </div>
+      <div class="term-body">
+        <h1 class="term-name" id="typedName"><span id="typedText"></span><span class="caret"></span></h1>
+        <div class="term-role">Desenvolvedor de Sistemas &amp; Automações com IA</div>
+        <div class="term-loc">São Paulo, SP · Português nativo</div>
+      </div>
+    </div>
+
+    <p class="hero-tagline">
+      Construo sistemas com IA generativa, automatizo processos com N8N e mantenho ambientes de TI monitorados 24/7. Os links abaixo levam para contato, projetos e currículo completo.
+    </p>
+  </header>
+
+  <!-- LINKTREE CORE LINKS -->
+  <nav class="links" aria-label="Links principais">
+    <a class="link-card" href="https://wa.me/5511911782999" target="_blank" rel="noopener">
+      <span class="link-text">
+        <span class="link-title">WhatsApp</span>
+        <span class="link-sub">Fale diretamente comigo</span>
+      </span>
+    </a>
+
+    <a class="link-card" href="mailto:pablosilva.empree@gmail.com">
+      <span class="link-text">
+        <span class="link-title">E-mail</span>
+        <span class="link-sub">pablosilva.empree@gmail.com</span>
+      </span>
+    </a>
+
+    <a class="link-card" href="#curriculo">
+      <span class="link-text">
+        <span class="link-title">Currículo completo</span>
+        <span class="link-sub">Experiência, formação e projetos</span>
+      </span>
+    </a>
+
+    <a class="link-card" href="#projeto">
+      <span class="link-text">
+        <span class="link-title">Projeto em destaque</span>
+        <span class="link-sub">Sistema para barbearia, no-code + IA</span>
+      </span>
+    </a>
+  </nav>
+
+  <!-- EXPERIÊNCIA -->
+  <section class="section" id="curriculo">
+    <div class="section-head">
+      <span class="section-tag">02</span>
+      <span class="section-title">Experiência profissional</span>
+    </div>
+
+    <div class="pipeline">
+      <div class="node active">
+        <div class="node-title">Analista de Monitoramento (NOC N1)</div>
+        <div class="node-meta">
+          <span>CDDIT</span><span>·</span><span>100% Home Office</span><span>·</span><span>PJ, escala 12x36</span><span>·</span>
+          <span class="badge-live"><span class="dot"></span>desde 08/2026</span>
+        </div>
+        <ul class="node-desc">
+          <li>Monitoramento de ambientes e infraestrutura de TI, acompanhando alertas e status em tempo real</li>
+          <li>Identificação inicial de incidentes, com análise de indicadores e disponibilidade dos serviços</li>
+          <li>Uso de ferramentas de monitoramento como Zabbix e Grafana (nível básico)</li>
+          <li>Registro, classificação, priorização e encaminhamento de tickets conforme SLA e níveis de atendimento</li>
+          <li>Comunicação com equipes técnicas para escalonamento e continuidade operacional</li>
+        </ul>
+      </div>
+
+      <div class="node">
+        <div class="node-title">Desenvolvedor de Sistemas &amp; Gestão de Projetos</div>
+        <div class="node-meta"><span>Freelancer</span><span>·</span><span>São Paulo, SP</span></div>
+        <ul class="node-desc">
+          <li>Levantamento de necessidades, definição de escopo e arquitetura de sistemas complexos</li>
+          <li>Desenvolvimento de plataformas com IA generativa, no-code/low-code, N8N e integração de APIs</li>
+          <li>Gestão de projetos com múltiplos módulos: regras de negócio, acessos, pagamentos e automações</li>
+          <li>Suporte técnico contínuo: correção de problemas, ajustes e melhorias sob demanda</li>
+          <li>Sistemas entregues para diferentes segmentos, incluindo barbearias e restaurantes</li>
+        </ul>
+      </div>
+
+      <div class="node">
+        <div class="node-title">Desenvolvedor de Sistemas &amp; Automações</div>
+        <div class="node-meta"><span>Freelancer</span><span>·</span><span>São Paulo, SP</span></div>
+        <ul class="node-desc">
+          <li>Desenvolvimento de sistemas completos utilizando IA como ferramenta principal de programação</li>
+          <li>Automações personalizadas com N8N para clientes de diferentes segmentos</li>
+          <li>Agentes de IA para atendimento automático e processos internos</li>
+          <li>Prospecção, negociação e fechamento de contratos de desenvolvimento</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-tag">03</span>
+      <span class="section-title">Habilidades técnicas</span>
+    </div>
+    <div class="skill-groups">
+      <div>
+        <div class="skill-group-label">Desenvolvimento &amp; automação</div>
+        <div class="chip-row">
+          <span class="chip">Desenvolvimento com IA</span>
+          <span class="chip">Automação de Processos (N8N)</span>
+          <span class="chip">Agentes de IA</span>
+          <span class="chip">Programação assistida por IA</span>
+          <span class="chip">Integração de APIs</span>
+          <span class="chip">No-code / Low-code</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-label">Monitoramento &amp; infraestrutura</div>
+        <div class="chip-row">
+          <span class="chip">Zabbix</span>
+          <span class="chip">Grafana</span>
+          <span class="chip">Gestão de Tickets &amp; SLA</span>
+          <span class="chip">Identificação de Incidentes</span>
+          <span class="chip">Continuidade Operacional</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-label">Marketing &amp; competências</div>
+        <div class="chip-row">
+          <span class="chip">Marketing Digital</span>
+          <span class="chip">SEO</span>
+          <span class="chip dim">Comunicação Eficaz</span>
+          <span class="chip dim">Trabalho em Equipe</span>
+          <span class="chip dim">Aprendizado Ágil</span>
+          <span class="chip dim">Proatividade</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETO EM DESTAQUE -->
+  <section class="section" id="projeto">
+    <div class="section-head">
+      <span class="section-tag">04</span>
+      <span class="section-title">Projeto em destaque</span>
+    </div>
+    <div class="project">
+      <div class="project-name">Sistema Operacional Completo para Barbearia</div>
+      <div class="project-type">plataforma integrada · no-code/low-code + IA generativa</div>
+      <div class="project-mods">
+        <div class="mod">
+          <div class="mod-name">módulo // clientes</div>
+          <div class="mod-desc">Agendamento online, histórico de atendimentos e notificações automáticas</div>
+        </div>
+        <div class="mod">
+          <div class="mod-name">módulo // barbeiros</div>
+          <div class="mod-desc">Agenda individual, comissões e desempenho por profissional</div>
+        </div>
+        <div class="mod">
+          <div class="mod-name">módulo // financeiro</div>
+          <div class="mod-desc">Controle de caixa, pagamentos integrados e banco digital</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMAÇÃO E IDIOMAS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-tag">05</span>
+      <span class="section-title">Formação &amp; idiomas</span>
+    </div>
+    <div class="pipeline" style="margin-bottom:26px;">
+      <div class="node">
+        <div class="node-title">Ensino Médio com Técnico em Administração</div>
+        <div class="node-meta"><span>E.E. Alberto Conte</span><span>·</span><span>São Paulo, SP</span></div>
+      </div>
+    </div>
+    <div class="lang-row">
+      <div class="lang-item">
+        <span class="lang-name">Português</span>
+        <span class="lang-bar-track"><span class="lang-bar-fill" data-pct="100"></span></span>
+        <span class="lang-pct">Nativo</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">Inglês</span>
+        <span class="lang-bar-track"><span class="lang-bar-fill" data-pct="55"></span></span>
+        <span class="lang-pct">Intermediário</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pablo Silva Ferreira © <span id="year"></span></span>
+    <span>São Paulo, SP, BR</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  // Ano dinâmico no rodapé
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Efeito de digitação no nome (única animação orquestrada no load)
+  var fullText = "Pablo Silva Ferreira";
+  var el = document.getElementById('typedText');
+  var i = 0;
+  function type(){
+    if(i <= fullText.length){
+      el.textContent = fullText.slice(0, i);
+      i++;
+      setTimeout(type, 55);
+    }
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = fullText;
+  } else {
+    type();
+  }
+
+  // Barras de idioma animam ao entrar em viewport
+  var bars = document.querySelectorAll('.lang-bar-fill');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var bar = entry.target;
+          bar.style.width = bar.getAttribute('data-pct') + '%';
+          obs.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.4 });
+    bars.forEach(function(bar){ obs.observe(bar); });
+  } else {
+    bars.forEach(function(bar){ bar.style.width = bar.getAttribute('data-pct') + '%'; });
+  }
+})();
+</script>
+</body>
+</html>
