@@ -1089,15 +1089,21 @@
   .project-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
-    flex-wrap: wrap;
   }
 
   .project-header-left {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-header-text {
+    flex: 1;
+    min-width: 0;
   }
 
   .project-badge-icon {
@@ -1127,9 +1133,10 @@
   }
 
   .project-name {
-    font-size: 17.5px;
+    font-size: clamp(15px, 2.2vw, 17.5px);
     font-weight: 700;
     color: #ffffff;
+    line-height: 1.25;
   }
 
   .project-type {
@@ -1153,6 +1160,9 @@
     font-family: var(--mono);
     transition: all 0.2s ease;
     text-decoration: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-left: auto;
   }
 
   .card-barber .project-direct-btn {
@@ -1579,7 +1589,7 @@
                   <div class="project-badge-icon">
                     <img src="assets/dub-barbeiro.jpg" alt="Logo DUB Barbeiro" class="project-img-thumb">
                   </div>
-                  <div>
+                  <div class="project-header-text">
                     <h3 class="project-name">DUB Barbeiro · Painel de Gestão &amp; Horários</h3>
                     <div class="project-type">SaaS Operacional para Barbeiros e Estabelecimentos</div>
                   </div>
@@ -1619,7 +1629,7 @@
                   <div class="project-badge-icon">
                     <img src="assets/dub-cliente.png" alt="Logo DUB Cliente" class="project-img-thumb">
                   </div>
-                  <div>
+                  <div class="project-header-text">
                     <h3 class="project-name">DUB Cliente · Agendamento Online Autônomo</h3>
                     <div class="project-type">Web App / PWA para Agendamentos de Clientes 24/7</div>
                   </div>
@@ -1659,8 +1669,8 @@
                   <div class="project-badge-icon">
                     <img src="assets/mr-caseiro.png" alt="Logo Mr Caseiro" class="project-img-thumb mr-caseiro-img">
                   </div>
-                  <div>
-                    <h3 class="project-name">Mr Caseiro · Cardápio Digital &amp; Food Delivery</h3>
+                  <div class="project-header-text">
+                    <h3 class="project-name">Mr Caseiro · Cardápio Digital &amp; Delivery</h3>
                     <div class="project-type">Plataforma Gastronômica &amp; Pedidos Online para Restaurante</div>
                   </div>
                 </div>
