@@ -3,600 +3,1763 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pablo Silva Ferreira · Dev & Automações com IA</title>
-<meta name="description" content="Pablo Silva Ferreira · Desenvolvedor de Sistemas e Automações com IA · N8N, Agentes de IA, Monitoramento NOC">
-<link rel="icon" href="data:,">
+<title>Pablo Silva Ferreira · Dev &amp; Automações com IA | Portfólio &amp; Links</title>
+<meta name="description" content="Pablo Silva Ferreira · Desenvolvedor de Sistemas e Automações com IA · N8N, Agentes de IA, Monitoramento NOC, Zabbix, Grafana.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #0E1116;
-    --bg-alt: #12161D;
-    --panel: #161B23;
-    --line: #232A35;
-    --text: #E8EAED;
-    --text-dim: #8B93A1;
-    --accent: #3D8BFF;
-    --accent-dim: #1A4A99;
-    --accent-soft: rgba(61,139,255,0.10);
-    --danger: #FF6B6B;
-    --radius: 10px;
-    --sans: 'Space Grotesk', system-ui, sans-serif;
+  :root {
+    --bg-deep: #07090e;
+    --bg: #0b0f17;
+    --bg-alt: #101622;
+    --panel: rgba(18, 24, 38, 0.75);
+    --panel-solid: #131a29;
+    --panel-hover: rgba(26, 35, 53, 0.85);
+    --line: rgba(56, 189, 248, 0.12);
+    --line-active: rgba(56, 189, 248, 0.35);
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #38bdf8;
+    --accent-glow: rgba(56, 189, 248, 0.35);
+    --accent-dim: #0284c7;
+    --accent-soft: rgba(56, 189, 248, 0.08);
+    --accent-success: #10b981;
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--line);
+    --shadow-glow: 0 0 35px -5px rgba(56, 189, 248, 0.18);
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  *{box-sizing:inherit; margin:0; padding:0;}
-  html{
-    scroll-behavior:smooth;
-    scroll-padding-top: env(safe-area-inset-top, 0px);
-    height:100%;
-  }
-  body{
-    height:100%;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(61,139,255,0.07), transparent 45%),
-      radial-gradient(circle at 90% 20%, rgba(61,139,255,0.05), transparent 40%),
-      var(--bg);
-    color:var(--text);
-    font-family:var(--sans);
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+
+  * { box-sizing: inherit; margin: 0; padding: 0; }
+  
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 30px;
+    height: 100%;
   }
 
-  a{color:inherit;}
-  img{max-width:100%; display:block;}
-
-  ::selection{ background: var(--accent); color:#04110C; }
-
-  /* focus visibility */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--accent);
-    outline-offset:3px;
-    border-radius:4px;
+  body {
+    min-height: 100%;
+    background-color: var(--bg-deep);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
   }
 
-  .wrap{
-    max-width:640px;
-    margin:0 auto;
-    padding:0 22px 90px;
+  /* Canvas de Fundo Interativo Tech */
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
   }
 
-  /* ---------- HERO / TERMINAL ---------- */
-  .hero{
-    padding:56px 0 34px;
-  }
-  .term{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    overflow:hidden;
-    box-shadow:0 0 0 1px rgba(0,0,0,0.2), 0 20px 60px -20px rgba(0,229,160,0.08);
-  }
-  .term-bar{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 14px;
-    background:var(--bg-alt);
-    border-bottom:1px solid var(--line);
-  }
-  .term-dot{width:10px; height:10px; border-radius:50%;}
-  .term-dot.r{background:#5c5c5c;}
-  .term-dot.y{background:#5c5c5c;}
-  .term-dot.g{background:#5c5c5c;}
-  .term-path{
-    margin-left:8px;
-    font-family:var(--sans);
-    font-size:12px;
-    color:var(--text-dim);
-  }
-  .term-body{
-    padding:22px 18px 26px;
-    font-family:var(--sans);
-    font-size:14px;
-  }
-  .term-name{
-    font-size:clamp(26px, 6vw, 34px);
-    font-weight:700;
-    color:var(--text);
-    margin:10px 0 6px;
-    letter-spacing:-0.01em;
-  }
-  .caret{
-    display:inline-block;
-    width:9px; height:1.05em;
-    background:var(--accent);
-    vertical-align:text-bottom;
-    margin-left:2px;
-    animation:blink 1s steps(1) infinite;
-  }
-  @keyframes blink{ 50%{ opacity:0; } }
-  .term-role{
-    font-size:15px;
-    color:var(--accent);
-    margin-bottom:4px;
-  }
-  .term-loc{
-    font-size:12.5px;
-    color:var(--text-dim);
+  /* Malha sutil de grid cibernético */
+  .tech-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+      linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
   }
 
-  .hero-tagline{
-    margin-top:22px;
-    font-size:15.5px;
-    color:var(--text-dim);
-    max-width:52ch;
+  /* Cursor Glow Spotlight */
+  .cursor-spotlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
   }
 
-  /* ---------- LINK LIST (linktree core) ---------- */
-  .links{
-    margin-top:8px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .link-card{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:16px 18px;
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-left:2px solid var(--accent-dim);
-    border-radius:var(--radius);
-    text-decoration:none;
-    transition:border-color .18s ease, transform .18s ease, background .18s ease;
-  }
-  .link-card:hover, .link-card:focus-visible{
-    border-color:var(--accent-dim);
-    border-left-color:var(--accent);
-    background:var(--bg-alt);
-    transform:translateY(-1px);
-  }
-  .link-card:active{ transform:translateY(0); }
-  .link-text{ flex:1; min-width:0; }
-  .link-title{ font-weight:600; font-size:15px; }
-  .link-sub{ font-size:12.5px; color:var(--text-dim); margin-top:1px; }
-
-  /* ---------- SECTION HEADERS ---------- */
-  .section{ margin-top:56px; }
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    gap:10px;
-    margin-bottom:18px;
-    padding-bottom:10px;
-    border-bottom:1px solid var(--line);
-  }
-  .section-tag{
-    font-family:var(--sans);
-    font-size:12px;
-    color:var(--accent);
-  }
-  .section-title{
-    font-size:19px;
-    font-weight:700;
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+    #bg-canvas { display: none; }
   }
 
-  /* ---------- PIPELINE / EXPERIENCE ---------- */
-  .pipeline{
-    position:relative;
-    padding-left:26px;
-  }
-  .pipeline::before{
-    content:"";
-    position:absolute;
-    left:6px; top:6px; bottom:6px;
-    width:1px;
-    background:linear-gradient(to bottom, var(--accent-dim), var(--line) 90%);
-  }
-  .node{
-    position:relative;
-    padding-bottom:28px;
-  }
-  .node:last-child{ padding-bottom:0; }
-  .node::before{
-    content:"";
-    position:absolute;
-    left:-26px; top:5px;
-    width:11px; height:11px;
-    border-radius:50%;
-    background:var(--bg);
-    border:2px solid var(--accent);
-  }
-  .node.active::before{
-    background:var(--accent);
-    box-shadow:0 0 0 3px var(--accent-soft);
-  }
-  .node-title{ font-weight:700; font-size:15.5px; }
-  .node-meta{
-    font-family:var(--sans);
-    font-size:11.5px;
-    color:var(--text-dim);
-    margin-top:3px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px 10px;
-  }
-  .badge-live{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    color:var(--accent);
-  }
-  .badge-live .dot{
-    width:6px; height:6px; border-radius:50%;
-    background:var(--accent);
-    animation:pulse 1.6s ease-in-out infinite;
-  }
-  @keyframes pulse{
-    0%,100%{ opacity:1; } 50%{ opacity:.35; }
-  }
-  .node-desc{
-    margin-top:10px;
-    font-size:14px;
-    color:var(--text-dim);
-    padding-left:0;
-  }
-  .node-desc li{
-    list-style:none;
-    position:relative;
-    padding-left:16px;
-    margin-top:6px;
-  }
-  .node-desc li::before{
-    content:"";
-    position:absolute;
-    left:2px;
-    top:9px;
-    width:5px;
-    height:5px;
-    border-radius:1px;
-    background:var(--accent);
-    transform:rotate(45deg);
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  ::selection {
+    background: var(--accent);
+    color: #04111d;
   }
 
-  /* ---------- SKILLS GRID ---------- */
-  .skill-groups{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-  }
-  .skill-group-label{
-    font-family:var(--sans);
-    font-size:11.5px;
-    color:var(--text-dim);
-    margin-bottom:9px;
-  }
-  .chip-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  .chip{
-    font-size:13px;
-    padding:7px 12px;
-    border:1px solid var(--line);
-    border-radius:7px;
-    background:var(--bg-alt);
-    color:var(--text);
-  }
-  .chip.dim{ color:var(--text-dim); }
-
-  /* ---------- PROJECT CARD ---------- */
-  .project{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:20px;
-  }
-  .project-name{ font-size:17px; font-weight:700; }
-  .project-type{
-    font-family:var(--sans);
-    font-size:11.5px;
-    color:var(--accent);
-    margin-top:2px;
-  }
-  .project-mods{
-    margin-top:14px;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:10px;
-  }
-  .mod{
-    padding:12px 13px;
-    background:var(--bg-alt);
-    border-radius:8px;
-    border:1px solid var(--line);
-  }
-  .mod-name{ font-size:13px; font-weight:600; color:var(--accent); font-family:var(--sans);}
-  .mod-desc{ font-size:13px; color:var(--text-dim); margin-top:4px; }
-
-  /* ---------- LANGUAGES ---------- */
-  .lang-row{ display:flex; flex-direction:column; gap:14px; }
-  .lang-item{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-  .lang-name{ font-size:14.5px; font-weight:600; }
-  .lang-bar-track{
-    flex:1;
-    max-width:220px;
-    height:6px;
-    background:var(--line);
-    border-radius:99px;
-    overflow:hidden;
-  }
-  .lang-bar-fill{
-    height:100%;
-    background:var(--accent);
-    border-radius:99px;
-    width:0%;
-    transition:width 1s cubic-bezier(.4,0,.2,1);
-  }
-  .lang-pct{ font-family:var(--sans); font-size:12px; color:var(--text-dim); width:70px; text-align:right; }
-
-  /* ---------- FOOTER ---------- */
-  footer{
-    margin-top:70px;
-    padding-top:22px;
-    border-top:1px solid var(--line);
-    font-family:var(--sans);
-    font-size:12px;
-    color:var(--text-dim);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:8px;
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 
-  /* dark/light token overrides kept for future use; page is intentionally single-theme (terminal aesthetic) */
+  /* Container Principal */
+  .app-container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Barra de Modo Superior (Alternador Desktop / Mobile) */
+  .top-control-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 15, 23, 0.82);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px;
+  }
+
+  .top-control-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .top-brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text-dim);
+  }
+
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 8px #34d399;
+    animation: livePulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+  }
+
+  .view-switchers {
+    display: flex;
+    align-items: center;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    padding: 3px;
+    gap: 4px;
+  }
+
+  .view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: all 0.2s ease;
+  }
+
+  .view-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .view-btn:hover {
+    color: var(--text);
+  }
+
+  .view-btn.active {
+    background: var(--accent);
+    color: #04111d;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.35);
+  }
+
+  /* Layout Wrapper */
+  .layout-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Modo Mobile Especificado pelo Usuário */
+  body.mode-mobile .layout-wrapper {
+    max-width: 620px;
+  }
+
+  body.mode-mobile .desktop-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  body.mode-mobile .profile-sidebar {
+    position: static;
+  }
+
+  /* Grade Desktop Completa */
+  .desktop-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media (max-width: 960px) {
+    .desktop-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
+
+  /* Coluna Esquerda: Perfil / Terminal Fixo */
+  .profile-sidebar {
+    position: sticky;
+    top: 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Terminal Card */
+  .term-card {
+    background: var(--panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .term-card:hover {
+    border-color: var(--line-active);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+  }
+
+  .term-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    background: rgba(16, 22, 34, 0.9);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .term-dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .term-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+
+  .term-dot.r { background: #ff5f56; opacity: 0.85; }
+  .term-dot.y { background: #ffbd2e; opacity: 0.85; }
+  .term-dot.g { background: #27c93f; opacity: 0.85; }
+
+  .term-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+
+  .term-body {
+    padding: 24px 20px;
+  }
+
+  .profile-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .terminal-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .profile-name {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .caret {
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    margin-left: 4px;
+    box-shadow: 0 0 10px var(--accent);
+    animation: blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .profile-role {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .profile-location {
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .profile-bio {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Quick Social Bar no Sidebar */
+  .sidebar-social-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .social-quick-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--panel-solid);
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font-size: 11.5px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .social-quick-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  .social-quick-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+    background: rgba(56, 189, 248, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .social-quick-btn:hover svg {
+    transform: scale(1.1);
+  }
+
+  /* Card de Destaque GitHub no Sidebar */
+  .github-profile-card {
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .github-profile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .github-profile-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card), 0 0 25px rgba(56, 189, 248, 0.15);
+  }
+
+  .gh-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .gh-identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .gh-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #1f2937;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .gh-icon-box svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .gh-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .gh-user {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--accent);
+  }
+
+  .gh-card-body {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .gh-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .gh-badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+  }
+
+  /* Coluna Direita: Conteúdo Principal */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Seção de Links Principais (Linktree Core Tech) */
+  .links-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-label-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .section-tag-prefix {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-tag-prefix::before {
+    content: "//";
+    color: var(--text-muted);
+  }
+
+  .action-hint {
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+
+  /* Card de Link Interativo com Efeitos de Ponta */
+  .link-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-dim);
+    border-radius: var(--radius);
+    text-decoration: none;
+    box-shadow: var(--shadow-card);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .link-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
+  }
+
+  .link-card:hover {
+    border-color: var(--line-active);
+    border-left-color: var(--accent);
+    background: var(--panel-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card), 0 0 25px rgba(56, 189, 248, 0.15);
+  }
+
+  .link-card:hover::before {
+    opacity: 1;
+  }
+
+  .link-card:active {
+    transform: translateY(0);
+  }
+
+  /* Card Destacado / Hero Link */
+  .link-card.featured-card {
+    border-left-color: var(--accent);
+    background: rgba(22, 32, 50, 0.85);
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+
+  .link-card.featured-card::after {
+    content: "DESTAQUE";
+    position: absolute;
+    top: 10px;
+    right: 48px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+  }
+
+  .link-icon-box {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 10px;
+    background: var(--panel-solid);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    transition: all 0.22s ease;
+  }
+
+  .link-card:hover .link-icon-box {
+    background: var(--accent);
+    color: #04111d;
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: scale(1.05);
+  }
+
+  .link-icon-box svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .link-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .link-title {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .link-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.22s ease;
+  }
+
+  .link-card:hover .link-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .link-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Seções de Conteúdo Técnico */
+  .section-container {
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Efeito de Flash Glow ao Direcionar para a Seção */
+  .section-container.highlight-pulse {
+    animation: targetGlow 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes targetGlow {
+    0% {
+      border-color: var(--accent);
+      box-shadow: 0 0 45px rgba(56, 189, 248, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.15);
+      transform: scale(1.01);
+    }
+    100% {
+      border-color: var(--line);
+      box-shadow: var(--shadow-card);
+      transform: scale(1);
+    }
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-title-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+
+  .section-badge-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Linha do Tempo / Experiência */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent) 0%, var(--line) 95%);
+  }
+
+  .timeline-node {
+    position: relative;
+    padding-bottom: 28px;
+  }
+
+  .timeline-node:last-child {
+    padding-bottom: 4px;
+  }
+
+  .timeline-node::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-deep);
+    border: 2px solid var(--accent);
+    transition: all 0.2s ease;
+  }
+
+  .timeline-node.active::before {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+
+  .node-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .node-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 4px 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  .node-desc {
+    list-style: none;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .node-desc li {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .node-desc li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  /* Grade de Habilidades Técnicas */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .skill-group {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+  }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    font-size: 12.5px;
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel-solid);
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+
+  .chip:hover {
+    border-color: var(--accent-dim);
+    color: #ffffff;
+    background: rgba(56, 189, 248, 0.08);
+  }
+
+  .chip.highlight {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Cards de Projeto Moderno */
+  .projects-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .project-item {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: all 0.25s ease;
+  }
+
+  .project-item:hover {
+    border-color: var(--line-active);
+    transform: translateY(-2px);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .project-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .project-type {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+
+  .project-mods-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .project-mod-box {
+    padding: 12px 14px;
+    background: var(--panel-solid);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+
+  .mod-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  .mod-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  /* Seção Idiomas & Formação */
+  .lang-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .lang-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .lang-label {
+    width: 100px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .lang-track {
+    flex: 1;
+    height: 7px;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+    border-radius: 99px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lang-val {
+    width: 90px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Rodapé Tecnológico */
+  footer {
+    margin-top: 40px;
+    padding: 24px 20px;
+    border-top: 1px solid var(--line);
+    background: rgba(7, 9, 14, 0.7);
+    backdrop-filter: blur(10px);
+  }
+
+  .footer-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-links a {
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  /* Toast de Notificação (ex: copiado com sucesso) */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #0f172a;
+    border: 1px solid var(--accent);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-family: var(--mono);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="term">
-      <div class="term-bar">
-        <span class="term-dot r"></span>
-        <span class="term-dot y"></span>
-        <span class="term-dot g"></span>
-        <span class="term-path">~/pablo-silva/zsh</span>
+<!-- Canvas com Partículas e Conexões Tech Interativas -->
+<canvas id="bg-canvas"></canvas>
+<div class="tech-grid-overlay"></div>
+<div class="cursor-spotlight" id="cursorSpotlight"></div>
+
+<div class="app-container">
+
+  <!-- BARRA DE CONTROLE SUPERIOR (Alternador Desktop/Mobile) -->
+  <header class="top-control-bar">
+    <div class="top-control-content">
+      <div class="top-brand">
+        <span class="live-indicator"><span class="live-dot"></span>NOC 24/7 ONLINE</span>
+        <span style="opacity:0.4;">|</span>
+        <span>pablo.dev/terminal</span>
       </div>
-      <div class="term-body">
-        <h1 class="term-name" id="typedName"><span id="typedText"></span><span class="caret"></span></h1>
-        <div class="term-role">Desenvolvedor de Sistemas &amp; Automações com IA</div>
-        <div class="term-loc">São Paulo, SP · Português nativo</div>
+
+      <!-- Alternador de Visualização -->
+      <div class="view-switchers" role="group" aria-label="Modo de visualização">
+        <button class="view-btn active" id="btnModeDesktop" title="Modo Expandido para Desktop / Telas Largas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <span>Desktop</span>
+        </button>
+        <button class="view-btn" id="btnModeMobile" title="Modo Compacto Estilo Linktree Mobile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <span>Mobile</span>
+        </button>
       </div>
     </div>
-
-    <p class="hero-tagline">
-      Construo sistemas com IA generativa, automatizo processos com N8N e mantenho ambientes de TI monitorados 24/7. Os links abaixo levam para contato, projetos e currículo completo.
-    </p>
   </header>
 
-  <!-- LINKTREE CORE LINKS -->
-  <nav class="links" aria-label="Links principais">
-    <a class="link-card" href="https://wa.me/5511911782999" target="_blank" rel="noopener">
-      <span class="link-text">
-        <span class="link-title">WhatsApp</span>
-        <span class="link-sub">Fale diretamente comigo</span>
-      </span>
-    </a>
+  <!-- CORPO PRINCIPAL COM LAYOUT RESPONSIVO INTELIGENTE -->
+  <main class="layout-wrapper">
+    <div class="desktop-grid">
 
-    <a class="link-card" href="mailto:pablosilva.empree@gmail.com">
-      <span class="link-text">
-        <span class="link-title">E-mail</span>
-        <span class="link-sub">pablosilva.empree@gmail.com</span>
-      </span>
-    </a>
+      <!-- COLUNA LATERAL ESQUERDA: Perfil, Terminal & GitHub -->
+      <aside class="profile-sidebar">
+        <div class="term-card">
+          <div class="term-header">
+            <div class="term-dots">
+              <span class="term-dot r"></span>
+              <span class="term-dot y"></span>
+              <span class="term-dot g"></span>
+            </div>
+            <div class="term-meta">~/pablo-silva/profile.zsh</div>
+          </div>
 
-    <a class="link-card" href="#curriculo">
-      <span class="link-text">
-        <span class="link-title">Currículo completo</span>
-        <span class="link-sub">Experiência, formação e projetos</span>
-      </span>
-    </a>
+          <div class="term-body">
+            <div class="profile-badge-row">
+              <span class="terminal-tag">v2.4-stable</span>
+              <span class="terminal-tag">Full-Stack &amp; AI</span>
+            </div>
 
-    <a class="link-card" href="#projeto">
-      <span class="link-text">
-        <span class="link-title">Projeto em destaque</span>
-        <span class="link-sub">Sistema para barbearia, no-code + IA</span>
-      </span>
-    </a>
-  </nav>
+            <h1 class="profile-name" id="typedName">
+              <span id="typedText"></span><span class="caret"></span>
+            </h1>
 
-  <!-- EXPERIÊNCIA -->
-  <section class="section" id="curriculo">
-    <div class="section-head">
-      <span class="section-tag">02</span>
-      <span class="section-title">Experiência profissional</span>
-    </div>
+            <div class="profile-role">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>Dev &amp; Automações com IA</span>
+            </div>
 
-    <div class="pipeline">
-      <div class="node active">
-        <div class="node-title">Analista de Monitoramento (NOC N1)</div>
-        <div class="node-meta">
-          <span>CDDIT</span><span>·</span><span>100% Home Office</span><span>·</span><span>PJ, escala 12x36</span><span>·</span>
-          <span class="badge-live"><span class="dot"></span>desde 08/2026</span>
+            <div class="profile-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>São Paulo, SP · Português nativo</span>
+            </div>
+
+            <p class="profile-bio">
+              Especialista no desenvolvimento de sistemas com IA generativa, fluxos avançados no N8N e monitoramento proativo de ambientes de infraestrutura de TI 24/7 (Zabbix &amp; Grafana).
+            </p>
+
+            <!-- Ações Rápidas -->
+            <div class="sidebar-social-actions">
+              <a href="https://wa.me/5511911782999" target="_blank" rel="noopener" class="social-quick-btn" title="Conversar no WhatsApp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>WhatsApp</span>
+              </a>
+
+              <a href="https://github.com/pablozsx77" target="_blank" rel="noopener" class="social-quick-btn" title="Abrir Perfil no GitHub">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                <span>GitHub</span>
+              </a>
+
+              <button type="button" class="social-quick-btn" id="btnCopyEmail" title="Copiar e-mail para a área de transferência">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="copyEmailText">Copiar E-mail</span>
+              </button>
+            </div>
+          </div>
         </div>
-        <ul class="node-desc">
-          <li>Monitoramento de ambientes e infraestrutura de TI, acompanhando alertas e status em tempo real</li>
-          <li>Identificação inicial de incidentes, com análise de indicadores e disponibilidade dos serviços</li>
-          <li>Uso de ferramentas de monitoramento como Zabbix e Grafana (nível básico)</li>
-          <li>Registro, classificação, priorização e encaminhamento de tickets conforme SLA e níveis de atendimento</li>
-          <li>Comunicação com equipes técnicas para escalonamento e continuidade operacional</li>
-        </ul>
-      </div>
 
-      <div class="node">
-        <div class="node-title">Desenvolvedor de Sistemas &amp; Gestão de Projetos</div>
-        <div class="node-meta"><span>Freelancer</span><span>·</span><span>São Paulo, SP</span></div>
-        <ul class="node-desc">
-          <li>Levantamento de necessidades, definição de escopo e arquitetura de sistemas complexos</li>
-          <li>Desenvolvimento de plataformas com IA generativa, no-code/low-code, N8N e integração de APIs</li>
-          <li>Gestão de projetos com múltiplos módulos: regras de negócio, acessos, pagamentos e automações</li>
-          <li>Suporte técnico contínuo: correção de problemas, ajustes e melhorias sob demanda</li>
-          <li>Sistemas entregues para diferentes segmentos, incluindo barbearias e restaurantes</li>
-        </ul>
-      </div>
+        <!-- Card Exclusivo do GitHub -->
+        <a href="https://github.com/pablozsx77" target="_blank" rel="noopener" class="github-profile-card">
+          <div class="gh-card-header">
+            <div class="gh-identity">
+              <div class="gh-icon-box">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </div>
+              <div>
+                <div class="gh-title">GitHub Oficial</div>
+                <div class="gh-user">@pablozsx77</div>
+              </div>
+            </div>
+            <span style="color:var(--accent);">↗</span>
+          </div>
+          <p class="gh-card-body">
+            Explore meus repositórios com automações em N8N, integrações com LLMs, scripts em Python e arquitetura de sistemas.
+          </p>
+          <div class="gh-badges">
+            <span class="gh-badge">★ Repositórios</span>
+            <span class="gh-badge">⚡ N8N Workflows</span>
+            <span class="gh-badge">🤖 IA Agentes</span>
+          </div>
+        </a>
+      </aside>
 
-      <div class="node">
-        <div class="node-title">Desenvolvedor de Sistemas &amp; Automações</div>
-        <div class="node-meta"><span>Freelancer</span><span>·</span><span>São Paulo, SP</span></div>
-        <ul class="node-desc">
-          <li>Desenvolvimento de sistemas completos utilizando IA como ferramenta principal de programação</li>
-          <li>Automações personalizadas com N8N para clientes de diferentes segmentos</li>
-          <li>Agentes de IA para atendimento automático e processos internos</li>
-          <li>Prospecção, negociação e fechamento de contratos de desenvolvimento</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+      <!-- COLUNA PRINCIPAL DIREITA: Links Rápidos, Experiência, Projetos & Skills -->
+      <div class="main-content">
 
-  <!-- HABILIDADES -->
-  <section class="section">
-    <div class="section-head">
-      <span class="section-tag">03</span>
-      <span class="section-title">Habilidades técnicas</span>
-    </div>
-    <div class="skill-groups">
-      <div>
-        <div class="skill-group-label">Desenvolvimento &amp; automação</div>
-        <div class="chip-row">
-          <span class="chip">Desenvolvimento com IA</span>
-          <span class="chip">Automação de Processos (N8N)</span>
-          <span class="chip">Agentes de IA</span>
-          <span class="chip">Programação assistida por IA</span>
-          <span class="chip">Integração de APIs</span>
-          <span class="chip">No-code / Low-code</span>
-        </div>
-      </div>
-      <div>
-        <div class="skill-group-label">Monitoramento &amp; infraestrutura</div>
-        <div class="chip-row">
-          <span class="chip">Zabbix</span>
-          <span class="chip">Grafana</span>
-          <span class="chip">Gestão de Tickets &amp; SLA</span>
-          <span class="chip">Identificação de Incidentes</span>
-          <span class="chip">Continuidade Operacional</span>
-        </div>
-      </div>
-      <div>
-        <div class="skill-group-label">Marketing &amp; competências</div>
-        <div class="chip-row">
-          <span class="chip">Marketing Digital</span>
-          <span class="chip">SEO</span>
-          <span class="chip dim">Comunicação Eficaz</span>
-          <span class="chip dim">Trabalho em Equipe</span>
-          <span class="chip dim">Aprendizado Ágil</span>
-          <span class="chip dim">Proatividade</span>
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- BLOCO 01: LINKS DO LINKTREE (Totalmente interativos com hover tech) -->
+        <section class="links-section" aria-label="Links principais">
+          <div class="section-label-bar">
+            <span class="section-tag-prefix">LINKS RÁPIDOS &amp; CONTATO</span>
+            <span class="action-hint">Selecione para direcionar</span>
+          </div>
 
-  <!-- PROJETO EM DESTAQUE -->
-  <section class="section" id="projeto">
-    <div class="section-head">
-      <span class="section-tag">04</span>
-      <span class="section-title">Projeto em destaque</span>
-    </div>
-    <div class="project">
-      <div class="project-name">Sistema Operacional Completo para Barbearia</div>
-      <div class="project-type">plataforma integrada · no-code/low-code + IA generativa</div>
-      <div class="project-mods">
-        <div class="mod">
-          <div class="mod-name">módulo // clientes</div>
-          <div class="mod-desc">Agendamento online, histórico de atendimentos e notificações automáticas</div>
-        </div>
-        <div class="mod">
-          <div class="mod-name">módulo // barbeiros</div>
-          <div class="mod-desc">Agenda individual, comissões e desempenho por profissional</div>
-        </div>
-        <div class="mod">
-          <div class="mod-name">módulo // financeiro</div>
-          <div class="mod-desc">Controle de caixa, pagamentos integrados e banco digital</div>
-        </div>
-      </div>
-    </div>
-  </section>
+          <!-- Link 1: Currículo Completo (Com animação e foco direcionado) -->
+          <a class="link-card featured-card" href="#curriculo" id="btnGoToCurriculo" title="Rolar até o Currículo">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">
+                <span>Currículo Profissional Completo</span>
+              </div>
+              <div class="link-sub">Experiência NOC, desenvolvimento IA, projetos e formação</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+            </div>
+          </a>
 
-  <!-- FORMAÇÃO E IDIOMAS -->
-  <section class="section">
-    <div class="section-head">
-      <span class="section-tag">05</span>
-      <span class="section-title">Formação &amp; idiomas</span>
-    </div>
-    <div class="pipeline" style="margin-bottom:26px;">
-      <div class="node">
-        <div class="node-title">Ensino Médio com Técnico em Administração</div>
-        <div class="node-meta"><span>E.E. Alberto Conte</span><span>·</span><span>São Paulo, SP</span></div>
-      </div>
-    </div>
-    <div class="lang-row">
-      <div class="lang-item">
-        <span class="lang-name">Português</span>
-        <span class="lang-bar-track"><span class="lang-bar-fill" data-pct="100"></span></span>
-        <span class="lang-pct">Nativo</span>
-      </div>
-      <div class="lang-item">
-        <span class="lang-name">Inglês</span>
-        <span class="lang-bar-track"><span class="lang-bar-fill" data-pct="55"></span></span>
-        <span class="lang-pct">Intermediário</span>
-      </div>
-    </div>
-  </section>
+          <!-- Link 2: GitHub Oficial no Linktree -->
+          <a class="link-card" href="https://github.com/pablozsx77" target="_blank" rel="noopener">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">GitHub · Repositórios &amp; Código</div>
+              <div class="link-sub">github.com/pablozsx77 · Códigos, automações e IA</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
 
+          <!-- Link 3: WhatsApp Direto -->
+          <a class="link-card" href="https://wa.me/5511911782999" target="_blank" rel="noopener">
+            <div class="link-icon-box" style="color:#25d366;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">WhatsApp Pessoal / Comercial</div>
+              <div class="link-sub">+55 (11) 91178-2999 · Resposta imediata</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Link 4: E-mail Corporativo -->
+          <a class="link-card" href="mailto:pablosilva.empree@gmail.com">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">E-mail Profissional</div>
+              <div class="link-sub">pablosilva.empree@gmail.com</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Link 5: Projeto em Destaque -->
+          <a class="link-card" href="#projeto" id="btnGoToProjeto">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">Projeto em Destaque</div>
+              <div class="link-sub">Sistema Operacional para Barbearias (No-code + IA)</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+            </div>
+          </a>
+        </section>
+
+        <!-- BLOCO 02: EXPERIÊNCIA PROFISSIONAL / CURRÍCULO -->
+        <section class="section-container" id="curriculo">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">01</span>
+              <h2 class="section-title">Experiência Profissional</h2>
+            </div>
+            <span class="section-badge-right">// HISTÓRICO</span>
+          </div>
+
+          <div class="timeline">
+            <!-- CDDIT NOC -->
+            <div class="timeline-node active">
+              <div class="node-title">Analista de Monitoramento (NOC N1)</div>
+              <div class="node-meta">
+                <span>CDDIT</span>
+                <span>·</span>
+                <span>100% Home Office</span>
+                <span>·</span>
+                <span>Escala 12x36</span>
+                <span>·</span>
+                <span class="live-indicator"><span class="live-dot"></span>desde 08/2026</span>
+              </div>
+              <ul class="node-desc">
+                <li>Monitoramento contínuo de infraestrutura crítica de TI, analisando alertas e status em tempo real;</li>
+                <li>Identificação de incidentes operacionais através de dashboards no <strong>Zabbix</strong> e <strong>Grafana</strong>;</li>
+                <li>Gestão rigorosa de tickets e SLA: classificação, triagem e encaminhamento seguro de chamados;</li>
+                <li>Comunicação alinhada com times de engenharia N2/N3 para mitigação de falhas e continuidade operacional.</li>
+              </ul>
+            </div>
+
+            <!-- Freelancer Dev & Gestão -->
+            <div class="timeline-node">
+              <div class="node-title">Desenvolvedor de Sistemas &amp; Gestão de Projetos</div>
+              <div class="node-meta">
+                <span>Freelance</span>
+                <span>·</span>
+                <span>São Paulo, SP</span>
+              </div>
+              <ul class="node-desc">
+                <li>Engenharia de requisitos, arquitetura de sistemas e implementação com IA generativa e low-code;</li>
+                <li>Construção de fluxos complexos no <strong>N8N</strong> integrando múltiplos webhooks e gateways de pagamento;</li>
+                <li>Gerenciamento de módulos de regras de negócio, autenticação RBAC e segurança de dados;</li>
+                <li>Plataformas completas entregues para empresas dos ramos de estética, alimentação e serviços.</li>
+              </ul>
+            </div>
+
+            <!-- Freelancer Dev Automações -->
+            <div class="timeline-node">
+              <div class="node-title">Desenvolvedor de Automações &amp; Agentes de IA</div>
+              <div class="node-meta">
+                <span>Freelance</span>
+                <span>·</span>
+                <span>São Paulo, SP</span>
+              </div>
+              <ul class="node-desc">
+                <li>Desenvolvimento de agentes autônomos de IA para atendimento, triagem e integração com CRMs;</li>
+                <li>Implementação de pipelines de dados inteligentes para redução de custos operacionais de clientes;</li>
+                <li>Consultoria técnica, diagnóstico de gargalos operacionais e negociação direta de escopo.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- BLOCO 03: HABILIDADES TÉCNICAS -->
+        <section class="section-container" id="habilidades">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">02</span>
+              <h2 class="section-title">Habilidades Técnicas &amp; Stack</h2>
+            </div>
+            <span class="section-badge-right">// COMPETÊNCIAS</span>
+          </div>
+
+          <div class="skills-grid">
+            <div class="skill-group">
+              <div class="skill-group-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>IA &amp; Automação</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip highlight">N8N Workflows</span>
+                <span class="chip highlight">Agentes de IA</span>
+                <span class="chip">OpenAI / LLMs</span>
+                <span class="chip">APIs RESTful</span>
+                <span class="chip">No-Code / Low-Code</span>
+                <span class="chip">Webhooks</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <div class="skill-group-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                <span>NOC &amp; Infraestrutura</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip highlight">Zabbix</span>
+                <span class="chip highlight">Grafana</span>
+                <span class="chip">Gestão de SLA</span>
+                <span class="chip">Monitoramento 24/7</span>
+                <span class="chip">Incident Response</span>
+                <span class="chip">Linux / Terminal</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <div class="skill-group-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg>
+                <span>Desenvolvimento &amp; Soft Skills</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip">JavaScript / TypeScript</span>
+                <span class="chip">Git &amp; GitHub</span>
+                <span class="chip">Arquitetura de Sistemas</span>
+                <span class="chip">Comunicação Técnica</span>
+                <span class="chip">Resolução Ágil</span>
+                <span class="chip">Visão de Negócios</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BLOCO 04: PROJETO EM DESTAQUE -->
+        <section class="section-container" id="projeto">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">03</span>
+              <h2 class="section-title">Projeto em Destaque</h2>
+            </div>
+            <span class="section-badge-right">// SAAS CASE</span>
+          </div>
+
+          <div class="projects-wrapper">
+            <div class="project-item">
+              <div class="project-header">
+                <div>
+                  <h3 class="project-name">Sistema Operacional Completo para Barbearia</h3>
+                  <div class="project-type">Plataforma integrada SaaS · No-code/Low-code + IA Generativa</div>
+                </div>
+                <span class="terminal-tag">Em Produção</span>
+              </div>
+
+              <div class="project-mods-grid">
+                <div class="project-mod-box">
+                  <div class="mod-title">// módulo_clientes</div>
+                  <div class="mod-desc">Agendamento autônomo online, sincronização de calendários, histórico de cortes e notificações via WhatsApp.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// módulo_profissionais</div>
+                  <div class="mod-desc">Agenda individualizada por barbeiro, cálculo dinâmico de comissões, ranking e métricas de produtividade.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// módulo_financeiro</div>
+                  <div class="mod-desc">Fechamento de caixa automatizado, split de pagamentos instantâneo via Pix e relatórios de fluxo financeiro.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BLOCO 05: FORMAÇÃO & IDIOMAS -->
+        <section class="section-container" id="formacao">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">04</span>
+              <h2 class="section-title">Formação &amp; Idiomas</h2>
+            </div>
+            <span class="section-badge-right">// BACKGROUND</span>
+          </div>
+
+          <div class="timeline" style="margin-bottom: 24px;">
+            <div class="timeline-node">
+              <div class="node-title">Ensino Médio com Técnico Integrado em Administração</div>
+              <div class="node-meta">
+                <span>E.E. Alberto Conte</span>
+                <span>·</span>
+                <span>São Paulo, SP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lang-grid">
+            <div class="lang-item">
+              <span class="lang-label">Português</span>
+              <div class="lang-track">
+                <div class="lang-bar-fill" data-pct="100"></div>
+              </div>
+              <span class="lang-val">Nativo (100%)</span>
+            </div>
+
+            <div class="lang-item">
+              <span class="lang-label">Inglês</span>
+              <div class="lang-track">
+                <div class="lang-bar-fill" data-pct="65"></div>
+              </div>
+              <span class="lang-val">Técnico / Interm.</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- RODAPÉ MODERNO TECH -->
   <footer>
-    <span>Pablo Silva Ferreira © <span id="year"></span></span>
-    <span>São Paulo, SP, BR</span>
+    <div class="footer-content">
+      <div>
+        <span>Pablo Silva Ferreira © <span id="year">2026</span> · Desenvolvedor &amp; NOC Analyst</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pablozsx77" target="_blank" rel="noopener">GitHub</a>
+        <span>·</span>
+        <a href="https://wa.me/5511911782999" target="_blank" rel="noopener">WhatsApp</a>
+        <span>·</span>
+        <a href="mailto:pablosilva.empree@gmail.com">E-mail</a>
+      </div>
+    </div>
   </footer>
 
 </div>
 
-<script>
-(function(){
-  // Ano dinâmico no rodapé
-  document.getElementById('year').textContent = new Date().getFullYear();
+<!-- Toast Feedback -->
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  <span id="toastMsg">E-mail copiado!</span>
+</div>
 
-  // Efeito de digitação no nome (única animação orquestrada no load)
+<script>
+(function() {
+  // Ano no rodapé
+  var yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  // 1. Alternador de Modo Desktop Widescreen vs Mobile
+  var btnDesktop = document.getElementById('btnModeDesktop');
+  var btnMobile = document.getElementById('btnModeMobile');
+  var body = document.body;
+
+  function setMode(mode) {
+    if (mode === 'mobile') {
+      body.classList.add('mode-mobile');
+      btnMobile.classList.add('active');
+      btnDesktop.classList.remove('active');
+    } else {
+      body.classList.remove('mode-mobile');
+      btnDesktop.classList.add('active');
+      btnMobile.classList.remove('active');
+    }
+    try {
+      localStorage.setItem('pablo_preferred_mode', mode);
+    } catch(e) {}
+  }
+
+  if (btnDesktop && btnMobile) {
+    btnDesktop.addEventListener('click', function() { setMode('desktop'); });
+    btnMobile.addEventListener('click', function() { setMode('mobile'); });
+
+    // Respeitar largura de tela e preferências salvas
+    try {
+      var saved = localStorage.getItem('pablo_preferred_mode');
+      if (saved) {
+        setMode(saved);
+      } else if (window.innerWidth < 800) {
+        setMode('mobile');
+      }
+    } catch(e) {}
+  }
+
+  // 2. Animação de Digitação Hacker no Nome
   var fullText = "Pablo Silva Ferreira";
-  var el = document.getElementById('typedText');
-  var i = 0;
-  function type(){
-    if(i <= fullText.length){
-      el.textContent = fullText.slice(0, i);
-      i++;
-      setTimeout(type, 55);
+  var elTyped = document.getElementById('typedText');
+  var idx = 0;
+  function runTypewriter() {
+    if (idx <= fullText.length) {
+      if (elTyped) elTyped.textContent = fullText.slice(0, idx);
+      idx++;
+      setTimeout(runTypewriter, 50);
     }
   }
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    el.textContent = fullText;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (elTyped) elTyped.textContent = fullText;
   } else {
-    type();
+    runTypewriter();
   }
 
-  // Barras de idioma animam ao entrar em viewport
+  // 3. Efeito Direcionar e Iluminar (Currículo e Projetos)
+  function setupSmoothScrollHighlight(triggerId, targetId) {
+    var trigger = document.getElementById(triggerId);
+    if (!trigger) return;
+    trigger.addEventListener('click', function(e) {
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.classList.remove('highlight-pulse');
+        void target.offsetWidth; // trigger reflow
+        target.classList.add('highlight-pulse');
+      }
+    });
+  }
+
+  setupSmoothScrollHighlight('btnGoToCurriculo', 'curriculo');
+  setupSmoothScrollHighlight('btnGoToProjeto', 'projeto');
+
+  // 4. Copiar E-mail com Toast
+  var btnCopyEmail = document.getElementById('btnCopyEmail');
+  var toast = document.getElementById('toast');
+  var toastMsg = document.getElementById('toastMsg');
+
+  function showToast(text) {
+    if (!toast) return;
+    if (toastMsg) toastMsg.textContent = text;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2800);
+  }
+
+  if (btnCopyEmail) {
+    btnCopyEmail.addEventListener('click', function() {
+      var email = 'pablosilva.empree@gmail.com';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(function() {
+          showToast('✓ E-mail copiado com sucesso!');
+        }).catch(function() {
+          window.location.href = 'mailto:' + email;
+        });
+      } else {
+        window.location.href = 'mailto:' + email;
+      }
+    });
+  }
+
+  // 5. Barras de Idioma Animadas ao Rolar
   var bars = document.querySelectorAll('.lang-bar-fill');
   if ('IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
+    var langObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           var bar = entry.target;
           bar.style.width = bar.getAttribute('data-pct') + '%';
-          obs.unobserve(bar);
+          langObs.unobserve(bar);
         }
       });
-    }, { threshold: 0.4 });
-    bars.forEach(function(bar){ obs.observe(bar); });
+    }, { threshold: 0.3 });
+    bars.forEach(function(b) { langObs.observe(b); });
   } else {
-    bars.forEach(function(bar){ bar.style.width = bar.getAttribute('data-pct') + '%'; });
+    bars.forEach(function(b) { b.style.width = b.getAttribute('data-pct') + '%'; });
+  }
+
+  // 6. Spotlight Cursor Tech
+  var spotlight = document.getElementById('cursorSpotlight');
+  var mousePos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+  window.addEventListener('mousemove', function(e) {
+    mousePos.x = e.clientX;
+    mousePos.y = e.clientY;
+    if (spotlight) {
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+    }
+  });
+
+  // 7. Canvas Interativo Tech (Partículas, Nós & Malha Minimalista)
+  var canvas = document.getElementById('bg-canvas');
+  if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var ctx = canvas.getContext('2d');
+    var width, height;
+    var particles = [];
+    var particleCount = 42;
+    var maxDistance = 140;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      var count = width < 768 ? 24 : particleCount;
+      for (var i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.6 + 1.2,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function renderCanvas() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Desenhar conexões entre partículas próximas
+      for (var i = 0; i < particles.length; i++) {
+        var p1 = particles[i];
+
+        // Mover partículas
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        // Rebater nas bordas suavemente
+        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
+
+        // Interação suave de atração com o mouse
+        var dxMouse = mousePos.x - p1.x;
+        var dyMouse = mousePos.y - p1.y;
+        var distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        if (distMouse < 180) {
+          var force = (180 - distMouse) / 180 * 0.02;
+          p1.vx += (dxMouse / distMouse) * force;
+          p1.vy += (dyMouse / distMouse) * force;
+        }
+
+        // Desenhar a partícula
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, ' + p1.alpha + ')';
+        ctx.shadowColor = 'rgba(56, 189, 248, 0.4)';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Conectar com nós vizinhos
+        for (var j = i + 1; j < particles.length; j++) {
+          var p2 = particles[j];
+          var dx = p1.x - p2.x;
+          var dy = p1.y - p2.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDistance) {
+            var lineAlpha = (1 - dist / maxDistance) * 0.16;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = 'rgba(56, 189, 248, ' + lineAlpha + ')';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(renderCanvas);
+    }
+
+    renderCanvas();
   }
 })();
 </script>
