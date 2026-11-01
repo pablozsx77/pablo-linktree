@@ -28,14 +28,17 @@
     --accent-soft: rgba(56, 189, 248, 0.08);
     --accent-success: #10b981;
     
-    /* Cores personalizadas dos projetos (extraídas das interfaces oficiais) */
-    --c-barber: #8b5cf6;
-    --c-barber-glow: rgba(139, 92, 246, 0.35);
-    --c-barber-soft: rgba(139, 92, 246, 0.12);
+    /* Cores ajustadas exatamente conforme pedido:
+       - Dub Barbeiro: Branco
+       - Dub Cliente: Vermelho
+       - Mr Caseiro: Dourado Âmbar */
+    --c-barber: #ffffff;
+    --c-barber-glow: rgba(255, 255, 255, 0.3);
+    --c-barber-soft: rgba(255, 255, 255, 0.12);
     
-    --c-client: #10b981;
-    --c-client-glow: rgba(16, 185, 129, 0.35);
-    --c-client-soft: rgba(16, 185, 129, 0.12);
+    --c-client: #ef4444;
+    --c-client-glow: rgba(239, 68, 68, 0.35);
+    --c-client-soft: rgba(239, 68, 68, 0.12);
     
     --c-food: #f59e0b;
     --c-food-glow: rgba(245, 158, 11, 0.35);
@@ -639,81 +642,82 @@
     transform: translateY(0);
   }
 
-  /* CORES TEMÁTICAS DOS PROJETOS (Extraídas das interfaces) */
+  /* ESTILOS ESPECÍFICOS DE CORES PARA OS PROJETOS */
+  
+  /* 1. DUB Barbeiro: BRANCO */
   .link-card.theme-barber {
-    border-left-color: var(--c-barber) !important;
+    border-left-color: #ffffff !important;
   }
   .link-card.theme-barber::before {
-    background: linear-gradient(90deg, var(--c-barber-soft), transparent 65%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent 65%);
   }
   .link-card.theme-barber:hover {
-    border-color: rgba(139, 92, 246, 0.5) !important;
-    border-left-color: #a78bfa !important;
-    box-shadow: var(--shadow-card), 0 0 25px var(--c-barber-glow) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    border-left-color: #ffffff !important;
+    box-shadow: var(--shadow-card), 0 0 25px rgba(255, 255, 255, 0.25) !important;
   }
   .link-card.theme-barber .link-icon-box {
-    color: #c4b5fd;
-    border-color: rgba(139, 92, 246, 0.3);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: #000000;
   }
   .link-card.theme-barber:hover .link-icon-box {
-    background: var(--c-barber);
-    color: #ffffff;
-    box-shadow: 0 0 16px var(--c-barber-glow);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+    border-color: #ffffff;
   }
   .link-card.theme-barber .project-tag-pill {
-    background: var(--c-barber-soft);
-    color: #c4b5fd;
-    border: 1px solid rgba(139, 92, 246, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
+  /* 2. DUB Cliente: VERMELHO */
   .link-card.theme-client {
-    border-left-color: var(--c-client) !important;
+    border-left-color: #ef4444 !important;
   }
   .link-card.theme-client::before {
-    background: linear-gradient(90deg, var(--c-client-soft), transparent 65%);
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.12), transparent 65%);
   }
   .link-card.theme-client:hover {
-    border-color: rgba(16, 185, 129, 0.5) !important;
-    border-left-color: #34d399 !important;
-    box-shadow: var(--shadow-card), 0 0 25px var(--c-client-glow) !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    border-left-color: #f87171 !important;
+    box-shadow: var(--shadow-card), 0 0 25px rgba(239, 68, 68, 0.3) !important;
   }
   .link-card.theme-client .link-icon-box {
-    color: #6ee7b7;
-    border-color: rgba(16, 185, 129, 0.3);
+    border-color: rgba(239, 68, 68, 0.35);
+    background: #a81c1c;
   }
   .link-card.theme-client:hover .link-icon-box {
-    background: var(--c-client);
-    color: #04111d;
-    box-shadow: 0 0 16px var(--c-client-glow);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
+    border-color: #ef4444;
   }
   .link-card.theme-client .project-tag-pill {
-    background: var(--c-client-soft);
-    color: #6ee7b7;
-    border: 1px solid rgba(16, 185, 129, 0.35);
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.35);
   }
 
+  /* 3. Mr Caseiro: DOURADO ÂMBAR */
   .link-card.theme-food {
-    border-left-color: var(--c-food) !important;
+    border-left-color: #f59e0b !important;
   }
   .link-card.theme-food::before {
-    background: linear-gradient(90deg, var(--c-food-soft), transparent 65%);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), transparent 65%);
   }
   .link-card.theme-food:hover {
     border-color: rgba(245, 158, 11, 0.5) !important;
     border-left-color: #fbbf24 !important;
-    box-shadow: var(--shadow-card), 0 0 25px var(--c-food-glow) !important;
+    box-shadow: var(--shadow-card), 0 0 25px rgba(245, 158, 11, 0.3) !important;
   }
   .link-card.theme-food .link-icon-box {
-    color: #fde68a;
-    border-color: rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.35);
+    background: #181512;
   }
   .link-card.theme-food:hover .link-icon-box {
-    background: var(--c-food);
-    color: #04111d;
-    box-shadow: 0 0 16px var(--c-food-glow);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
+    border-color: #fbbf24;
   }
   .link-card.theme-food .project-tag-pill {
-    background: var(--c-food-soft);
+    background: rgba(245, 158, 11, 0.12);
     color: #fde68a;
     border: 1px solid rgba(245, 158, 11, 0.35);
   }
@@ -734,6 +738,7 @@
     border-color: rgba(56, 189, 248, 0.3);
   }
 
+  /* Caixa e Imagens das Logos */
   .link-icon-box {
     width: 44px;
     height: 44px;
@@ -746,13 +751,36 @@
     justify-content: center;
     color: var(--accent);
     transition: all 0.22s ease;
+    overflow: hidden;
   }
 
-  .link-card:hover .link-icon-box {
+  .link-icon-box.project-logo-box {
+    padding: 0;
+  }
+
+  .project-img-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 9px;
+  }
+
+  .project-img-thumb.mr-caseiro-img {
+    object-fit: contain;
+    background: #1e1b18;
+    padding: 3px;
+  }
+
+  .link-card:hover .link-icon-box:not(.project-logo-box) {
     background: var(--accent);
     color: #04111d;
     border-color: var(--accent);
     box-shadow: 0 0 16px var(--accent-glow);
+    transform: scale(1.05);
+  }
+
+  .link-card:hover .link-icon-box.project-logo-box {
     transform: scale(1.05);
   }
 
@@ -1010,7 +1038,7 @@
     font-weight: 500;
   }
 
-  /* CARDS DE PROJETOS EM DESTAQUE COM CORES DAS TELAS */
+  /* CARDS DE PROJETOS EM DESTAQUE COM AS CORES ESPECIFICADAS */
   .projects-wrapper {
     display: flex;
     flex-direction: column;
@@ -1027,28 +1055,31 @@
     overflow: hidden;
   }
 
+  /* Card 1: DUB Barbeiro (Branco) */
   .project-item.card-barber {
-    border-top: 3px solid var(--c-barber);
+    border-top: 3px solid #ffffff;
   }
   .project-item.card-barber:hover {
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-barber-glow);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.2);
   }
 
+  /* Card 2: DUB Cliente (Vermelho) */
   .project-item.card-client {
-    border-top: 3px solid var(--c-client);
+    border-top: 3px solid #ef4444;
   }
   .project-item.card-client:hover {
-    border-color: rgba(16, 185, 129, 0.5);
-    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-client-glow);
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(239, 68, 68, 0.25);
   }
 
+  /* Card 3: Mr Caseiro (Dourado) */
   .project-item.card-food {
-    border-top: 3px solid var(--c-food);
+    border-top: 3px solid #f59e0b;
   }
   .project-item.card-food:hover {
     border-color: rgba(245, 158, 11, 0.5);
-    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-food-glow);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(245, 158, 11, 0.25);
   }
 
   .project-item:hover {
@@ -1077,23 +1108,21 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    overflow: hidden;
   }
 
   .card-barber .project-badge-icon {
-    background: var(--c-barber-soft);
-    color: #c4b5fd;
-    border: 1px solid rgba(139, 92, 246, 0.35);
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
   .card-client .project-badge-icon {
-    background: var(--c-client-soft);
-    color: #6ee7b7;
-    border: 1px solid rgba(16, 185, 129, 0.35);
+    background: #a81c1c;
+    border: 1px solid rgba(239, 68, 68, 0.35);
   }
 
   .card-food .project-badge-icon {
-    background: var(--c-food-soft);
-    color: #fde68a;
+    background: #181512;
     border: 1px solid rgba(245, 158, 11, 0.35);
   }
 
@@ -1109,8 +1138,8 @@
     margin-top: 3px;
   }
 
-  .card-barber .project-type { color: #a78bfa; }
-  .card-client .project-type { color: #34d399; }
+  .card-barber .project-type { color: #e2e8f0; }
+  .card-client .project-type { color: #f87171; }
   .card-food .project-type { color: #fbbf24; }
 
   .project-direct-btn {
@@ -1127,36 +1156,36 @@
   }
 
   .card-barber .project-direct-btn {
-    background: var(--c-barber-soft);
-    color: #c4b5fd;
-    border: 1px solid rgba(139, 92, 246, 0.35);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
   .card-barber .project-direct-btn:hover {
-    background: var(--c-barber);
-    color: #ffffff;
-    box-shadow: 0 0 16px var(--c-barber-glow);
+    background: #ffffff;
+    color: #04111d;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
   }
 
   .card-client .project-direct-btn {
-    background: var(--c-client-soft);
-    color: #6ee7b7;
-    border: 1px solid rgba(16, 185, 129, 0.35);
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.35);
   }
   .card-client .project-direct-btn:hover {
-    background: var(--c-client);
-    color: #04111d;
-    box-shadow: 0 0 16px var(--c-client-glow);
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
   }
 
   .card-food .project-direct-btn {
-    background: var(--c-food-soft);
+    background: rgba(245, 158, 11, 0.12);
     color: #fde68a;
     border: 1px solid rgba(245, 158, 11, 0.35);
   }
   .card-food .project-direct-btn:hover {
-    background: var(--c-food);
+    background: #f59e0b;
     color: #04111d;
-    box-shadow: 0 0 16px var(--c-food-glow);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
   }
 
   .project-overview-text {
@@ -1181,14 +1210,15 @@
   }
 
   .mod-title {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
-    font-family: var(--mono);
+    font-family: var(--sans);
+    letter-spacing: -0.01em;
   }
 
-  .card-barber .mod-title { color: #c4b5fd; }
-  .card-client .mod-title { color: #6ee7b7; }
-  .card-food .mod-title { color: #fde68a; }
+  .card-barber .mod-title { color: #ffffff; }
+  .card-client .mod-title { color: #f87171; }
+  .card-food .mod-title { color: #fbbf24; }
 
   .mod-desc {
     font-size: 12px;
@@ -1428,17 +1458,17 @@
       <!-- COLUNA PRINCIPAL DIREITA: Links Rápidos, Projetos, Experiência & Skills -->
       <div class="main-content">
 
-        <!-- BLOCO 01: LINKS DO LINKTREE (Com os 3 Projetos Reais e seus Links) -->
+        <!-- BLOCO 01: LINKS DO LINKTREE (Com as Logos Oficiais Leves) -->
         <section class="links-section" aria-label="Links principais">
           <div class="section-label-bar">
             <span class="section-tag-prefix">PROJETOS &amp; LINKS PRINCIPAIS</span>
             <span class="action-hint">Acesse os sistemas em produção</span>
           </div>
 
-          <!-- Projeto 1: DUB Barbeiro (Roxo Neon / Violeta) -->
+          <!-- Projeto 1: DUB Barbeiro (Logo Oficial Preta / Branco) -->
           <a class="link-card theme-barber" href="https://barbeirodub.lovable.app" target="_blank" rel="noopener">
-            <div class="link-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+            <div class="link-icon-box project-logo-box">
+              <img src="assets/dub-barbeiro.jpg" alt="Logo DUB Barbeiro" class="project-img-thumb">
             </div>
             <div class="link-text">
               <div class="link-title">
@@ -1452,10 +1482,10 @@
             </div>
           </a>
 
-          <!-- Projeto 2: DUB Cliente (Verde Menta / Esmeralda) -->
+          <!-- Projeto 2: DUB Cliente (Logo Oficial Vermelha / Vermelho) -->
           <a class="link-card theme-client" href="https://dubagenda.lovable.app" target="_blank" rel="noopener">
-            <div class="link-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg>
+            <div class="link-icon-box project-logo-box">
+              <img src="assets/dub-cliente.png" alt="Logo DUB Cliente" class="project-img-thumb">
             </div>
             <div class="link-text">
               <div class="link-title">
@@ -1469,10 +1499,10 @@
             </div>
           </a>
 
-          <!-- Projeto 3: Mr Caseiro (Dourado / Âmbar Quente) -->
+          <!-- Projeto 3: Mr Caseiro (Logo Oficial Dourada / Dourado Âmbar) -->
           <a class="link-card theme-food" href="https://mrcardapio.lovable.app" target="_blank" rel="noopener">
-            <div class="link-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+            <div class="link-icon-box project-logo-box">
+              <img src="assets/mr-caseiro.png" alt="Logo Mr Caseiro" class="project-img-thumb mr-caseiro-img">
             </div>
             <div class="link-text">
               <div class="link-title">
@@ -1531,23 +1561,23 @@
           </a>
         </section>
 
-        <!-- BLOCO 02: PROJETOS EM DESTAQUE (COM LINKS INDIVIDUAIS E CORES DAS TELAS) -->
+        <!-- BLOCO 02: PROJETOS EM DESTAQUE (Com Logos Oficiais, sem // e cores ajustadas) -->
         <section class="section-container" id="projeto">
           <div class="section-head">
             <div class="section-title-wrap">
               <span class="section-tag">01</span>
               <h2 class="section-title">Projetos em Destaque</h2>
             </div>
-            <span class="section-badge-right">// APPS EM PRODUÇÃO</span>
+            <span class="section-badge-right">APPS EM PRODUÇÃO</span>
           </div>
 
           <div class="projects-wrapper">
-            <!-- Projeto 1: DUB Barbeiro -->
+            <!-- Projeto 1: DUB Barbeiro (Logo Oficial / Branco) -->
             <div class="project-item card-barber">
               <div class="project-header">
                 <div class="project-header-left">
                   <div class="project-badge-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+                    <img src="assets/dub-barbeiro.jpg" alt="Logo DUB Barbeiro" class="project-img-thumb">
                   </div>
                   <div>
                     <h3 class="project-name">DUB Barbeiro · Painel de Gestão &amp; Horários</h3>
@@ -1566,28 +1596,28 @@
 
               <div class="project-mods-grid">
                 <div class="project-mod-box">
-                  <div class="mod-title">// controle_encaixes</div>
+                  <div class="mod-title">Controle de Encaixes</div>
                   <div class="mod-desc">Visualização rápida de horário livre agora e agendamento de novo encaixe em poucos toques.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// faturamento_metricas</div>
+                  <div class="mod-title">Métricas de Faturamento</div>
                   <div class="mod-desc">Painel financeiro com gráficos de evolução, receita mensal e relatórios gerenciais consolidados.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// gestao_servicos</div>
+                  <div class="mod-title">Gestão de Serviços</div>
                   <div class="mod-desc">Busca inteligente de clientes, controle de cortes, comissões e integração profissional com redes sociais.</div>
                 </div>
               </div>
             </div>
 
-            <!-- Projeto 2: DUB Cliente -->
+            <!-- Projeto 2: DUB Cliente (Logo Oficial / Vermelho) -->
             <div class="project-item card-client">
               <div class="project-header">
                 <div class="project-header-left">
                   <div class="project-badge-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg>
+                    <img src="assets/dub-cliente.png" alt="Logo DUB Cliente" class="project-img-thumb">
                   </div>
                   <div>
                     <h3 class="project-name">DUB Cliente · Agendamento Online Autônomo</h3>
@@ -1606,28 +1636,28 @@
 
               <div class="project-mods-grid">
                 <div class="project-mod-box">
-                  <div class="mod-title">// agendamento_express</div>
+                  <div class="mod-title">Agendamento Express</div>
                   <div class="mod-desc">Seleção de serviço, data, horário e profissional com confirmação imediata.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// historico_status</div>
+                  <div class="mod-title">Histórico &amp; Status</div>
                   <div class="mod-desc">Acompanhamento dos agendamentos concluídos, lembretes automáticos e gestão de perfil.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// beneficios_suporte</div>
+                  <div class="mod-title">Benefícios &amp; Suporte</div>
                   <div class="mod-desc">Identificação de cortes e sobrancelhas grátis/cortesia com canal direto para suporte ao cliente.</div>
                 </div>
               </div>
             </div>
 
-            <!-- Projeto 3: Mr Caseiro -->
+            <!-- Projeto 3: Mr Caseiro (Logo Oficial / Dourado) -->
             <div class="project-item card-food">
               <div class="project-header">
                 <div class="project-header-left">
                   <div class="project-badge-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                    <img src="assets/mr-caseiro.png" alt="Logo Mr Caseiro" class="project-img-thumb mr-caseiro-img">
                   </div>
                   <div>
                     <h3 class="project-name">Mr Caseiro · Cardápio Digital &amp; Food Delivery</h3>
@@ -1646,17 +1676,17 @@
 
               <div class="project-mods-grid">
                 <div class="project-mod-box">
-                  <div class="mod-title">// cardapio_visual</div>
+                  <div class="mod-title">Cardápio Visual</div>
                   <div class="mod-desc">Apresentação com fotos apetitosas de contra filé acebolado, feijoada completa, parmegiana e bebidas.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// personalizacao_pratos</div>
+                  <div class="mod-title">Personalização de Pratos</div>
                   <div class="mod-desc">Ponto da carne, porções especiais, acompanhamentos customizados e cálculo dinâmico de valor.</div>
                 </div>
 
                 <div class="project-mod-box">
-                  <div class="mod-title">// pedidos_delivery</div>
+                  <div class="mod-title">Pedidos &amp; Delivery Direto</div>
                   <div class="mod-desc">Localização para entrega, resumo de pedido e envio direto para atendimento sem intermediários.</div>
                 </div>
               </div>
@@ -1671,7 +1701,7 @@
               <span class="section-tag">02</span>
               <h2 class="section-title">Experiência Profissional</h2>
             </div>
-            <span class="section-badge-right">// HISTÓRICO</span>
+            <span class="section-badge-right">HISTÓRICO</span>
           </div>
 
           <div class="timeline">
@@ -1735,7 +1765,7 @@
               <span class="section-tag">03</span>
               <h2 class="section-title">Habilidades Técnicas &amp; Stack</h2>
             </div>
-            <span class="section-badge-right">// COMPETÊNCIAS</span>
+            <span class="section-badge-right">COMPETÊNCIAS</span>
           </div>
 
           <div class="skills-grid">
@@ -1793,7 +1823,7 @@
               <span class="section-tag">04</span>
               <h2 class="section-title">Formação &amp; Idiomas</h2>
             </div>
-            <span class="section-badge-right">// BACKGROUND</span>
+            <span class="section-badge-right">BACKGROUND</span>
           </div>
 
           <div class="timeline" style="margin-bottom: 24px;">
