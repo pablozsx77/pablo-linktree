@@ -27,6 +27,20 @@
     --accent-dim: #0284c7;
     --accent-soft: rgba(56, 189, 248, 0.08);
     --accent-success: #10b981;
+    
+    /* Cores personalizadas dos projetos (extraídas das interfaces oficiais) */
+    --c-barber: #8b5cf6;
+    --c-barber-glow: rgba(139, 92, 246, 0.35);
+    --c-barber-soft: rgba(139, 92, 246, 0.12);
+    
+    --c-client: #10b981;
+    --c-client-glow: rgba(16, 185, 129, 0.35);
+    --c-client-soft: rgba(16, 185, 129, 0.12);
+    
+    --c-food: #f59e0b;
+    --c-food-glow: rgba(245, 158, 11, 0.35);
+    --c-food-soft: rgba(245, 158, 11, 0.12);
+
     --radius-sm: 8px;
     --radius: 12px;
     --radius-lg: 18px;
@@ -144,7 +158,7 @@
     z-index: 40;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    background: rgba(11, 15, 23, 0.82);
+    background: rgba(11, 15, 23, 0.85);
     border-bottom: 1px solid var(--line);
     padding: 10px 20px;
   }
@@ -580,7 +594,7 @@
     color: var(--text-muted);
   }
 
-  /* Card de Link Interativo com Efeitos de Ponta */
+  /* Card de Link Interativo */
   .link-card {
     position: relative;
     display: flex;
@@ -625,27 +639,99 @@
     transform: translateY(0);
   }
 
-  /* Card Destacado / Hero Link */
+  /* CORES TEMÁTICAS DOS PROJETOS (Extraídas das interfaces) */
+  .link-card.theme-barber {
+    border-left-color: var(--c-barber) !important;
+  }
+  .link-card.theme-barber::before {
+    background: linear-gradient(90deg, var(--c-barber-soft), transparent 65%);
+  }
+  .link-card.theme-barber:hover {
+    border-color: rgba(139, 92, 246, 0.5) !important;
+    border-left-color: #a78bfa !important;
+    box-shadow: var(--shadow-card), 0 0 25px var(--c-barber-glow) !important;
+  }
+  .link-card.theme-barber .link-icon-box {
+    color: #c4b5fd;
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+  .link-card.theme-barber:hover .link-icon-box {
+    background: var(--c-barber);
+    color: #ffffff;
+    box-shadow: 0 0 16px var(--c-barber-glow);
+  }
+  .link-card.theme-barber .project-tag-pill {
+    background: var(--c-barber-soft);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+  }
+
+  .link-card.theme-client {
+    border-left-color: var(--c-client) !important;
+  }
+  .link-card.theme-client::before {
+    background: linear-gradient(90deg, var(--c-client-soft), transparent 65%);
+  }
+  .link-card.theme-client:hover {
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    border-left-color: #34d399 !important;
+    box-shadow: var(--shadow-card), 0 0 25px var(--c-client-glow) !important;
+  }
+  .link-card.theme-client .link-icon-box {
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .link-card.theme-client:hover .link-icon-box {
+    background: var(--c-client);
+    color: #04111d;
+    box-shadow: 0 0 16px var(--c-client-glow);
+  }
+  .link-card.theme-client .project-tag-pill {
+    background: var(--c-client-soft);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+  }
+
+  .link-card.theme-food {
+    border-left-color: var(--c-food) !important;
+  }
+  .link-card.theme-food::before {
+    background: linear-gradient(90deg, var(--c-food-soft), transparent 65%);
+  }
+  .link-card.theme-food:hover {
+    border-color: rgba(245, 158, 11, 0.5) !important;
+    border-left-color: #fbbf24 !important;
+    box-shadow: var(--shadow-card), 0 0 25px var(--c-food-glow) !important;
+  }
+  .link-card.theme-food .link-icon-box {
+    color: #fde68a;
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+  .link-card.theme-food:hover .link-icon-box {
+    background: var(--c-food);
+    color: #04111d;
+    box-shadow: 0 0 16px var(--c-food-glow);
+  }
+  .link-card.theme-food .project-tag-pill {
+    background: var(--c-food-soft);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+  }
+
+  .project-tag-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
   .link-card.featured-card {
     border-left-color: var(--accent);
     background: rgba(22, 32, 50, 0.85);
     border-color: rgba(56, 189, 248, 0.3);
-  }
-
-  .link-card.featured-card::after {
-    content: "DESTAQUE";
-    position: absolute;
-    top: 10px;
-    right: 48px;
-    font-family: var(--mono);
-    font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    padding: 2px 7px;
-    border-radius: 4px;
-    background: rgba(56, 189, 248, 0.15);
-    color: var(--accent);
-    border: 1px solid rgba(56, 189, 248, 0.25);
   }
 
   .link-icon-box {
@@ -687,6 +773,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .link-sub {
@@ -710,7 +797,7 @@
   }
 
   .link-card:hover .link-arrow {
-    color: var(--accent);
+    color: #ffffff;
     transform: translateX(4px);
   }
 
@@ -731,7 +818,6 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  /* Efeito de Flash Glow ao Direcionar para a Seção */
   .section-container.highlight-pulse {
     animation: targetGlow 2.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -924,23 +1010,48 @@
     font-weight: 500;
   }
 
-  /* Cards de Projeto Moderno */
+  /* CARDS DE PROJETOS EM DESTAQUE COM CORES DAS TELAS */
   .projects-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 22px;
   }
 
   .project-item {
     background: var(--bg-alt);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 22px;
     transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-item.card-barber {
+    border-top: 3px solid var(--c-barber);
+  }
+  .project-item.card-barber:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-barber-glow);
+  }
+
+  .project-item.card-client {
+    border-top: 3px solid var(--c-client);
+  }
+  .project-item.card-client:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-client-glow);
+  }
+
+  .project-item.card-food {
+    border-top: 3px solid var(--c-food);
+  }
+  .project-item.card-food:hover {
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px var(--c-food-glow);
   }
 
   .project-item:hover {
-    border-color: var(--line-active);
     transform: translateY(-2px);
   }
 
@@ -948,11 +1059,46 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .project-header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .project-badge-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-barber .project-badge-icon {
+    background: var(--c-barber-soft);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+  }
+
+  .card-client .project-badge-icon {
+    background: var(--c-client-soft);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+  }
+
+  .card-food .project-badge-icon {
+    background: var(--c-food-soft);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.35);
   }
 
   .project-name {
-    font-size: 17px;
+    font-size: 17.5px;
     font-weight: 700;
     color: #ffffff;
   }
@@ -960,12 +1106,68 @@
   .project-type {
     font-family: var(--mono);
     font-size: 12px;
-    color: var(--accent);
     margin-top: 3px;
   }
 
+  .card-barber .project-type { color: #a78bfa; }
+  .card-client .project-type { color: #34d399; }
+  .card-food .project-type { color: #fbbf24; }
+
+  .project-direct-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .card-barber .project-direct-btn {
+    background: var(--c-barber-soft);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+  }
+  .card-barber .project-direct-btn:hover {
+    background: var(--c-barber);
+    color: #ffffff;
+    box-shadow: 0 0 16px var(--c-barber-glow);
+  }
+
+  .card-client .project-direct-btn {
+    background: var(--c-client-soft);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+  }
+  .card-client .project-direct-btn:hover {
+    background: var(--c-client);
+    color: #04111d;
+    box-shadow: 0 0 16px var(--c-client-glow);
+  }
+
+  .card-food .project-direct-btn {
+    background: var(--c-food-soft);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+  }
+  .card-food .project-direct-btn:hover {
+    background: var(--c-food);
+    color: #04111d;
+    box-shadow: 0 0 16px var(--c-food-glow);
+  }
+
+  .project-overview-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
   .project-mods-grid {
-    margin-top: 16px;
+    margin-top: 14px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px;
@@ -981,9 +1183,12 @@
   .mod-title {
     font-size: 12.5px;
     font-weight: 600;
-    color: var(--accent);
     font-family: var(--mono);
   }
+
+  .card-barber .mod-title { color: #c4b5fd; }
+  .card-client .mod-title { color: #6ee7b7; }
+  .card-food .mod-title { color: #fde68a; }
 
   .mod-desc {
     font-size: 12px;
@@ -1220,17 +1425,68 @@
         </a>
       </aside>
 
-      <!-- COLUNA PRINCIPAL DIREITA: Links Rápidos, Experiência, Projetos & Skills -->
+      <!-- COLUNA PRINCIPAL DIREITA: Links Rápidos, Projetos, Experiência & Skills -->
       <div class="main-content">
 
-        <!-- BLOCO 01: LINKS DO LINKTREE (Totalmente interativos com hover tech) -->
+        <!-- BLOCO 01: LINKS DO LINKTREE (Com os 3 Projetos Reais e seus Links) -->
         <section class="links-section" aria-label="Links principais">
           <div class="section-label-bar">
-            <span class="section-tag-prefix">LINKS RÁPIDOS &amp; CONTATO</span>
-            <span class="action-hint">Selecione para direcionar</span>
+            <span class="section-tag-prefix">PROJETOS &amp; LINKS PRINCIPAIS</span>
+            <span class="action-hint">Acesse os sistemas em produção</span>
           </div>
 
-          <!-- Link 1: Currículo Completo (Com animação e foco direcionado) -->
+          <!-- Projeto 1: DUB Barbeiro (Roxo Neon / Violeta) -->
+          <a class="link-card theme-barber" href="https://barbeirodub.lovable.app" target="_blank" rel="noopener">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">
+                <span>DUB Barbeiro · Painel de Gestão</span>
+                <span class="project-tag-pill">Gestão</span>
+              </div>
+              <div class="link-sub">barbeirodub.lovable.app · Agenda, encaixes, faturamento e equipe</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Projeto 2: DUB Cliente (Verde Menta / Esmeralda) -->
+          <a class="link-card theme-client" href="https://dubagenda.lovable.app" target="_blank" rel="noopener">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">
+                <span>DUB Cliente · Agendamento Online</span>
+                <span class="project-tag-pill">Clientes</span>
+              </div>
+              <div class="link-sub">dubagenda.lovable.app · Agendamento 24/7, serviços e clube grátis</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Projeto 3: Mr Caseiro (Dourado / Âmbar Quente) -->
+          <a class="link-card theme-food" href="https://mrcardapio.lovable.app" target="_blank" rel="noopener">
+            <div class="link-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+            </div>
+            <div class="link-text">
+              <div class="link-title">
+                <span>Mr Caseiro · Cardápio &amp; Delivery</span>
+                <span class="project-tag-pill">Restaurante</span>
+              </div>
+              <div class="link-sub">mrcardapio.lovable.app · Marmitas, pratos executivos e pedidos</div>
+            </div>
+            <div class="link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Link Currículo com Direcionamento e Efeito Flash -->
           <a class="link-card featured-card" href="#curriculo" id="btnGoToCurriculo" title="Rolar até o Currículo">
             <div class="link-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -1239,14 +1495,14 @@
               <div class="link-title">
                 <span>Currículo Profissional Completo</span>
               </div>
-              <div class="link-sub">Experiência NOC, desenvolvimento IA, projetos e formação</div>
+              <div class="link-sub">Experiência NOC, desenvolvimento IA, histórico e formação</div>
             </div>
             <div class="link-arrow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
             </div>
           </a>
 
-          <!-- Link 2: GitHub Oficial no Linktree -->
+          <!-- Link GitHub no Linktree -->
           <a class="link-card" href="https://github.com/pablozsx77" target="_blank" rel="noopener">
             <div class="link-icon-box">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
@@ -1260,7 +1516,7 @@
             </div>
           </a>
 
-          <!-- Link 3: WhatsApp Direto -->
+          <!-- WhatsApp Direto -->
           <a class="link-card" href="https://wa.me/5511911782999" target="_blank" rel="noopener">
             <div class="link-icon-box" style="color:#25d366;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -1273,41 +1529,146 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
           </a>
-
-          <!-- Link 4: E-mail Corporativo -->
-          <a class="link-card" href="mailto:pablosilva.empree@gmail.com">
-            <div class="link-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            </div>
-            <div class="link-text">
-              <div class="link-title">E-mail Profissional</div>
-              <div class="link-sub">pablosilva.empree@gmail.com</div>
-            </div>
-            <div class="link-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </div>
-          </a>
-
-          <!-- Link 5: Projeto em Destaque -->
-          <a class="link-card" href="#projeto" id="btnGoToProjeto">
-            <div class="link-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            </div>
-            <div class="link-text">
-              <div class="link-title">Projeto em Destaque</div>
-              <div class="link-sub">Sistema Operacional para Barbearias (No-code + IA)</div>
-            </div>
-            <div class="link-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
-            </div>
-          </a>
         </section>
 
-        <!-- BLOCO 02: EXPERIÊNCIA PROFISSIONAL / CURRÍCULO -->
-        <section class="section-container" id="curriculo">
+        <!-- BLOCO 02: PROJETOS EM DESTAQUE (COM LINKS INDIVIDUAIS E CORES DAS TELAS) -->
+        <section class="section-container" id="projeto">
           <div class="section-head">
             <div class="section-title-wrap">
               <span class="section-tag">01</span>
+              <h2 class="section-title">Projetos em Destaque</h2>
+            </div>
+            <span class="section-badge-right">// APPS EM PRODUÇÃO</span>
+          </div>
+
+          <div class="projects-wrapper">
+            <!-- Projeto 1: DUB Barbeiro -->
+            <div class="project-item card-barber">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <div class="project-badge-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+                  </div>
+                  <div>
+                    <h3 class="project-name">DUB Barbeiro · Painel de Gestão &amp; Horários</h3>
+                    <div class="project-type">SaaS Operacional para Barbeiros e Estabelecimentos</div>
+                  </div>
+                </div>
+                <a href="https://barbeirodub.lovable.app" target="_blank" rel="noopener" class="project-direct-btn">
+                  <span>barbeirodub.lovable.app</span>
+                  <span>↗</span>
+                </a>
+              </div>
+
+              <p class="project-overview-text">
+                Plataforma de gestão diária desenvolvida para barbeiros: controle de horários em tempo real, novo encaixe ágil, gráficos de faturamento mensal e integração com Instagram.
+              </p>
+
+              <div class="project-mods-grid">
+                <div class="project-mod-box">
+                  <div class="mod-title">// controle_encaixes</div>
+                  <div class="mod-desc">Visualização rápida de horário livre agora e agendamento de novo encaixe em poucos toques.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// faturamento_metricas</div>
+                  <div class="mod-desc">Painel financeiro com gráficos de evolução, receita mensal e relatórios gerenciais consolidados.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// gestao_servicos</div>
+                  <div class="mod-desc">Busca inteligente de clientes, controle de cortes, comissões e integração profissional com redes sociais.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projeto 2: DUB Cliente -->
+            <div class="project-item card-client">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <div class="project-badge-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="project-name">DUB Cliente · Agendamento Online Autônomo</h3>
+                    <div class="project-type">Web App / PWA para Agendamentos de Clientes 24/7</div>
+                  </div>
+                </div>
+                <a href="https://dubagenda.lovable.app" target="_blank" rel="noopener" class="project-direct-btn">
+                  <span>dubagenda.lovable.app</span>
+                  <span>↗</span>
+                </a>
+              </div>
+
+              <p class="project-overview-text">
+                Experiência simplificada para o cliente final agendar cortes de cabelo e sobrancelha, escolher seu barbeiro de confiança, visualizar agendamentos anteriores e acessar benefícios.
+              </p>
+
+              <div class="project-mods-grid">
+                <div class="project-mod-box">
+                  <div class="mod-title">// agendamento_express</div>
+                  <div class="mod-desc">Seleção de serviço, data, horário e profissional com confirmação imediata.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// historico_status</div>
+                  <div class="mod-desc">Acompanhamento dos agendamentos concluídos, lembretes automáticos e gestão de perfil.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// beneficios_suporte</div>
+                  <div class="mod-desc">Identificação de cortes e sobrancelhas grátis/cortesia com canal direto para suporte ao cliente.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projeto 3: Mr Caseiro -->
+            <div class="project-item card-food">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <div class="project-badge-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                  </div>
+                  <div>
+                    <h3 class="project-name">Mr Caseiro · Cardápio Digital &amp; Food Delivery</h3>
+                    <div class="project-type">Plataforma Gastronômica &amp; Pedidos Online para Restaurante</div>
+                  </div>
+                </div>
+                <a href="https://mrcardapio.lovable.app" target="_blank" rel="noopener" class="project-direct-btn">
+                  <span>mrcardapio.lovable.app</span>
+                  <span>↗</span>
+                </a>
+              </div>
+
+              <p class="project-overview-text">
+                Cardápio digital moderno e sistema de pedidos diretos para o restaurante Mr Caseiro ("Tempero de Casa"): marmitas, feijoadas, carnes e bebidas com carrinho interativo.
+              </p>
+
+              <div class="project-mods-grid">
+                <div class="project-mod-box">
+                  <div class="mod-title">// cardapio_visual</div>
+                  <div class="mod-desc">Apresentação com fotos apetitosas de contra filé acebolado, feijoada completa, parmegiana e bebidas.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// personalizacao_pratos</div>
+                  <div class="mod-desc">Ponto da carne, porções especiais, acompanhamentos customizados e cálculo dinâmico de valor.</div>
+                </div>
+
+                <div class="project-mod-box">
+                  <div class="mod-title">// pedidos_delivery</div>
+                  <div class="mod-desc">Localização para entrega, resumo de pedido e envio direto para atendimento sem intermediários.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BLOCO 03: EXPERIÊNCIA PROFISSIONAL / CURRÍCULO -->
+        <section class="section-container" id="curriculo">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">02</span>
               <h2 class="section-title">Experiência Profissional</h2>
             </div>
             <span class="section-badge-right">// HISTÓRICO</span>
@@ -1367,11 +1728,11 @@
           </div>
         </section>
 
-        <!-- BLOCO 03: HABILIDADES TÉCNICAS -->
+        <!-- BLOCO 04: HABILIDADES TÉCNICAS -->
         <section class="section-container" id="habilidades">
           <div class="section-head">
             <div class="section-title-wrap">
-              <span class="section-tag">02</span>
+              <span class="section-tag">03</span>
               <h2 class="section-title">Habilidades Técnicas &amp; Stack</h2>
             </div>
             <span class="section-badge-right">// COMPETÊNCIAS</span>
@@ -1420,46 +1781,6 @@
                 <span class="chip">Comunicação Técnica</span>
                 <span class="chip">Resolução Ágil</span>
                 <span class="chip">Visão de Negócios</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- BLOCO 04: PROJETO EM DESTAQUE -->
-        <section class="section-container" id="projeto">
-          <div class="section-head">
-            <div class="section-title-wrap">
-              <span class="section-tag">03</span>
-              <h2 class="section-title">Projeto em Destaque</h2>
-            </div>
-            <span class="section-badge-right">// SAAS CASE</span>
-          </div>
-
-          <div class="projects-wrapper">
-            <div class="project-item">
-              <div class="project-header">
-                <div>
-                  <h3 class="project-name">Sistema Operacional Completo para Barbearia</h3>
-                  <div class="project-type">Plataforma integrada SaaS · No-code/Low-code + IA Generativa</div>
-                </div>
-                <span class="terminal-tag">Em Produção</span>
-              </div>
-
-              <div class="project-mods-grid">
-                <div class="project-mod-box">
-                  <div class="mod-title">// módulo_clientes</div>
-                  <div class="mod-desc">Agendamento autônomo online, sincronização de calendários, histórico de cortes e notificações via WhatsApp.</div>
-                </div>
-
-                <div class="project-mod-box">
-                  <div class="mod-title">// módulo_profissionais</div>
-                  <div class="mod-desc">Agenda individualizada por barbeiro, cálculo dinâmico de comissões, ranking e métricas de produtividade.</div>
-                </div>
-
-                <div class="project-mod-box">
-                  <div class="mod-title">// módulo_financeiro</div>
-                  <div class="mod-desc">Fechamento de caixa automatizado, split de pagamentos instantâneo via Pix e relatórios de fluxo financeiro.</div>
-                </div>
               </div>
             </div>
           </div>
@@ -1563,7 +1884,6 @@
     btnDesktop.addEventListener('click', function() { setMode('desktop'); });
     btnMobile.addEventListener('click', function() { setMode('mobile'); });
 
-    // Respeitar largura de tela e preferências salvas
     try {
       var saved = localStorage.getItem('pablo_preferred_mode');
       if (saved) {
@@ -1592,7 +1912,7 @@
     runTypewriter();
   }
 
-  // 3. Efeito Direcionar e Iluminar (Currículo e Projetos)
+  // 3. Efeito Direcionar e Iluminar (Currículo)
   function setupSmoothScrollHighlight(triggerId, targetId) {
     var trigger = document.getElementById(triggerId);
     if (!trigger) return;
@@ -1602,14 +1922,13 @@
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         target.classList.remove('highlight-pulse');
-        void target.offsetWidth; // trigger reflow
+        void target.offsetWidth;
         target.classList.add('highlight-pulse');
       }
     });
   }
 
   setupSmoothScrollHighlight('btnGoToCurriculo', 'curriculo');
-  setupSmoothScrollHighlight('btnGoToProjeto', 'projeto');
 
   // 4. Copiar E-mail com Toast
   var btnCopyEmail = document.getElementById('btnCopyEmail');
@@ -1706,19 +2025,14 @@
     function renderCanvas() {
       ctx.clearRect(0, 0, width, height);
 
-      // Desenhar conexões entre partículas próximas
       for (var i = 0; i < particles.length; i++) {
         var p1 = particles[i];
-
-        // Mover partículas
         p1.x += p1.vx;
         p1.y += p1.vy;
 
-        // Rebater nas bordas suavemente
         if (p1.x < 0 || p1.x > width) p1.vx *= -1;
         if (p1.y < 0 || p1.y > height) p1.vy *= -1;
 
-        // Interação suave de atração com o mouse
         var dxMouse = mousePos.x - p1.x;
         var dyMouse = mousePos.y - p1.y;
         var distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
@@ -1728,7 +2042,6 @@
           p1.vy += (dyMouse / distMouse) * force;
         }
 
-        // Desenhar a partícula
         ctx.beginPath();
         ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(56, 189, 248, ' + p1.alpha + ')';
@@ -1737,7 +2050,6 @@
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Conectar com nós vizinhos
         for (var j = i + 1; j < particles.length; j++) {
           var p2 = particles[j];
           var dx = p1.x - p2.x;
