@@ -28,12 +28,9 @@
     --accent-soft: rgba(56, 189, 248, 0.08);
     --accent-success: #10b981;
     
-    /* Cores ajustadas exatamente conforme pedido:
-       - Dub Barbeiro: Branco
-       - Dub Cliente: Vermelho
-       - Mr Caseiro: Dourado Âmbar */
+    /* Cores dos projetos */
     --c-barber: #ffffff;
-    --c-barber-glow: rgba(255, 255, 255, 0.3);
+    --c-barber-glow: rgba(255, 255, 255, 0.28);
     --c-barber-soft: rgba(255, 255, 255, 0.12);
     
     --c-client: #ef4444;
@@ -56,8 +53,18 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  * { box-sizing: inherit; margin: 0; padding: 0; }
+  *, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
   
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Elimina 100% de qualquer scroll lateral */
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 30px;
@@ -72,7 +79,6 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
     position: relative;
   }
 
@@ -81,8 +87,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     z-index: 0;
     pointer-events: none;
     opacity: 0.85;
@@ -93,8 +101,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     background-image: 
       linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
@@ -105,19 +115,25 @@
     -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
   }
 
-  /* Cursor Glow Spotlight */
+  /* Cursor Glow Spotlight (desativado no mobile para prevenir overflow e economizar bateria) */
   .cursor-spotlight {
     position: fixed;
     top: 0;
     left: 0;
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, transparent 70%);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 1;
     transition: opacity 0.3s ease;
+  }
+
+  @media (hover: none), (max-width: 768px) {
+    .cursor-spotlight {
+      display: none !important;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -152,9 +168,12 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
-  /* Barra de Modo Superior (Alternador Desktop / Mobile) */
+  /* Barra de Topo Fina & Limpa (Sem alternadores manuais) */
   .top-control-bar {
     position: sticky;
     top: 0;
@@ -164,6 +183,7 @@
     background: rgba(11, 15, 23, 0.85);
     border-bottom: 1px solid var(--line);
     padding: 10px 20px;
+    width: 100%;
   }
 
   .top-control-content {
@@ -185,6 +205,21 @@
     color: var(--text-dim);
   }
 
+  .brand-divider {
+    opacity: 0.35;
+  }
+
+  .brand-path {
+    color: var(--text-muted);
+  }
+
+  .top-location {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
   .live-indicator {
     display: inline-flex;
     align-items: center;
@@ -196,6 +231,7 @@
     color: #34d399;
     font-size: 11px;
     font-family: var(--mono);
+    white-space: nowrap;
   }
 
   .live-dot {
@@ -212,91 +248,56 @@
     50% { transform: scale(1.3); opacity: 0.5; }
   }
 
-  .view-switchers {
-    display: flex;
-    align-items: center;
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: 99px;
-    padding: 3px;
-    gap: 4px;
-  }
-
-  .view-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 99px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-dim);
-    transition: all 0.2s ease;
-  }
-
-  .view-btn svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .view-btn:hover {
-    color: var(--text);
-  }
-
-  .view-btn.active {
-    background: var(--accent);
-    color: #04111d;
-    font-weight: 600;
-    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.35);
-  }
-
-  /* Layout Wrapper */
+  /* Layout Wrapper Fluido */
   .layout-wrapper {
     width: 100%;
     max-width: 1180px;
     margin: 0 auto;
     padding: 24px 20px 80px;
-    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Modo Mobile Especificado pelo Usuário */
-  body.mode-mobile .layout-wrapper {
-    max-width: 620px;
+  @media (max-width: 480px) {
+    .layout-wrapper {
+      padding: 16px 14px 60px;
+    }
   }
 
-  body.mode-mobile .desktop-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  /* RESPONSIVIDADE AUTOMÁTICA NATIVA (Sem intervenção manual) */
+  /* Telas Desktop (> 960px): 2 colunas com sidebar fixa */
+  @media (min-width: 961px) {
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .profile-sidebar {
+      position: sticky;
+      top: 66px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 
-  body.mode-mobile .profile-sidebar {
-    position: static;
-  }
-
-  /* Grade Desktop Completa */
-  .desktop-grid {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: 32px;
-    align-items: start;
-  }
-
+  /* Telas Mobile e Tablets (<= 960px): Coluna única centrada */
   @media (max-width: 960px) {
+    .layout-wrapper {
+      max-width: 640px;
+    }
+
     .desktop-grid {
       display: flex;
       flex-direction: column;
       gap: 24px;
+      width: 100%;
     }
-  }
 
-  /* Coluna Esquerda: Perfil / Terminal Fixo */
-  .profile-sidebar {
-    position: sticky;
-    top: 76px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    .profile-sidebar {
+      position: static;
+      width: 100%;
+    }
   }
 
   /* Terminal Card */
@@ -309,6 +310,7 @@
     overflow: hidden;
     box-shadow: var(--shadow-card);
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    width: 100%;
   }
 
   .term-card:hover {
@@ -348,7 +350,7 @@
   }
 
   .term-body {
-    padding: 24px 20px;
+    padding: 22px 18px;
   }
 
   .profile-badge-row {
@@ -356,6 +358,7 @@
     align-items: center;
     gap: 8px;
     margin-bottom: 14px;
+    flex-wrap: wrap;
   }
 
   .terminal-tag {
@@ -366,15 +369,17 @@
     padding: 3px 8px;
     border-radius: 4px;
     border: 1px solid rgba(56, 189, 248, 0.2);
+    white-space: nowrap;
   }
 
   .profile-name {
-    font-size: clamp(24px, 3vw, 30px);
+    font-size: clamp(22px, 5vw, 30px);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: #ffffff;
     line-height: 1.2;
     margin-bottom: 8px;
+    word-break: break-word;
   }
 
   .caret {
@@ -391,13 +396,14 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   .profile-role {
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--accent);
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
   }
 
   .profile-location {
@@ -406,11 +412,12 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
   }
 
   .profile-bio {
-    margin-top: 18px;
-    padding-top: 16px;
+    margin-top: 16px;
+    padding-top: 14px;
     border-top: 1px solid var(--line);
     font-size: 13.5px;
     color: var(--text-dim);
@@ -431,19 +438,20 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 12px 6px;
+    padding: 10px 4px;
     border-radius: var(--radius-sm);
     background: var(--panel-solid);
     border: 1px solid var(--line);
     color: var(--text-dim);
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 500;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
 
   .social-quick-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     transition: transform 0.2s ease;
   }
 
@@ -458,7 +466,7 @@
     transform: scale(1.1);
   }
 
-  /* Card de Destaque GitHub no Sidebar */
+  /* Card Exclusivo do GitHub */
   .github-profile-card {
     background: var(--panel);
     backdrop-filter: blur(14px);
@@ -471,6 +479,7 @@
     display: block;
     position: relative;
     overflow: hidden;
+    width: 100%;
   }
 
   .github-profile-card::before {
@@ -555,18 +564,21 @@
     color: var(--text-muted);
   }
 
-  /* Coluna Direita: Conteúdo Principal */
+  /* Coluna Principal Direita */
   .main-content {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    width: 100%;
+    min-width: 0;
   }
 
-  /* Seção de Links Principais (Linktree Core Tech) */
+  /* Seção de Links Principais */
   .links-section {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
 
   .section-label-bar {
@@ -574,6 +586,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 4px;
+    gap: 8px;
   }
 
   .section-tag-prefix {
@@ -602,8 +615,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
+    gap: 14px;
+    padding: 14px 18px;
     background: var(--panel);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -614,6 +627,8 @@
     box-shadow: var(--shadow-card);
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
   .link-card::before {
@@ -642,9 +657,7 @@
     transform: translateY(0);
   }
 
-  /* ESTILOS ESPECÍFICOS DE CORES PARA OS PROJETOS */
-  
-  /* 1. DUB Barbeiro: BRANCO */
+  /* Cores temáticas dos projetos */
   .link-card.theme-barber {
     border-left-color: #ffffff !important;
   }
@@ -670,7 +683,6 @@
     border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
-  /* 2. DUB Cliente: VERMELHO */
   .link-card.theme-client {
     border-left-color: #ef4444 !important;
   }
@@ -696,7 +708,6 @@
     border: 1px solid rgba(239, 68, 68, 0.35);
   }
 
-  /* 3. Mr Caseiro: DOURADO ÂMBAR */
   .link-card.theme-food {
     border-left-color: #f59e0b !important;
   }
@@ -738,7 +749,6 @@
     border-color: rgba(56, 189, 248, 0.3);
   }
 
-  /* Caixa e Imagens das Logos */
   .link-icon-box {
     width: 44px;
     height: 44px;
@@ -752,6 +762,7 @@
     color: var(--accent);
     transition: all 0.22s ease;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .link-icon-box.project-logo-box {
@@ -792,10 +803,11 @@
   .link-text {
     flex: 1;
     min-width: 0;
+    overflow: hidden;
   }
 
   .link-title {
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text);
     display: flex;
@@ -805,7 +817,7 @@
   }
 
   .link-sub {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--text-dim);
     margin-top: 2px;
     white-space: nowrap;
@@ -814,14 +826,15 @@
   }
 
   .link-arrow {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
     transition: all 0.22s ease;
+    flex-shrink: 0;
   }
 
   .link-card:hover .link-arrow {
@@ -830,20 +843,29 @@
   }
 
   .link-arrow svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
 
-  /* Seções de Conteúdo Técnico */
+  /* Seções de Conteúdo */
   .section-container {
     background: var(--panel);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 22px;
     box-shadow: var(--shadow-card);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  @media (max-width: 480px) {
+    .section-container {
+      padding: 18px 14px;
+    }
   }
 
   .section-container.highlight-pulse {
@@ -867,9 +889,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 16px;
-    margin-bottom: 20px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
     border-bottom: 1px solid var(--line);
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .section-title-wrap {
@@ -896,12 +920,14 @@
     font-family: var(--mono);
     font-size: 11px;
     color: var(--text-muted);
+    letter-spacing: 0.05em;
   }
 
   /* Linha do Tempo / Experiência */
   .timeline {
     position: relative;
     padding-left: 28px;
+    width: 100%;
   }
 
   .timeline::before {
@@ -916,7 +942,7 @@
 
   .timeline-node {
     position: relative;
-    padding-bottom: 28px;
+    padding-bottom: 26px;
   }
 
   .timeline-node:last-child {
@@ -942,9 +968,10 @@
   }
 
   .node-title {
-    font-size: 16px;
+    font-size: 15.5px;
     font-weight: 700;
     color: #ffffff;
+    line-height: 1.35;
   }
 
   .node-meta {
@@ -984,11 +1011,12 @@
     transform: rotate(45deg);
   }
 
-  /* Grade de Habilidades Técnicas */
+  /* Grade de Habilidades Técnicas Fluida */
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 16px;
+    width: 100%;
   }
 
   .skill-group {
@@ -1038,24 +1066,32 @@
     font-weight: 500;
   }
 
-  /* CARDS DE PROJETOS EM DESTAQUE COM AS CORES ESPECIFICADAS */
+  /* CARDS DE PROJETOS EM DESTAQUE */
   .projects-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
+    width: 100%;
   }
 
   .project-item {
     background: var(--bg-alt);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 22px;
+    padding: 20px;
     transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
-  /* Card 1: DUB Barbeiro (Branco) */
+  @media (max-width: 480px) {
+    .project-item {
+      padding: 16px 14px;
+    }
+  }
+
   .project-item.card-barber {
     border-top: 3px solid #ffffff;
   }
@@ -1064,7 +1100,6 @@
     box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.2);
   }
 
-  /* Card 2: DUB Cliente (Vermelho) */
   .project-item.card-client {
     border-top: 3px solid #ef4444;
   }
@@ -1073,7 +1108,6 @@
     box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(239, 68, 68, 0.25);
   }
 
-  /* Card 3: Mr Caseiro (Dourado) */
   .project-item.card-food {
     border-top: 3px solid #f59e0b;
   }
@@ -1086,17 +1120,19 @@
     transform: translateY(-2px);
   }
 
+  /* Cabeçalho do Projeto com Adaptação Fluida */
   .project-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    width: 100%;
   }
 
   .project-header-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     flex: 1;
     min-width: 0;
   }
@@ -1107,8 +1143,8 @@
   }
 
   .project-badge-icon {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -1133,16 +1169,18 @@
   }
 
   .project-name {
-    font-size: clamp(15px, 2.2vw, 17.5px);
+    font-size: clamp(15px, 2.2vw, 17px);
     font-weight: 700;
     color: #ffffff;
     line-height: 1.25;
+    word-break: break-word;
   }
 
   .project-type {
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11.5px;
     margin-top: 3px;
+    line-height: 1.35;
   }
 
   .card-barber .project-type { color: #e2e8f0; }
@@ -1152,8 +1190,9 @@
   .project-direct-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 7px 13px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
@@ -1162,7 +1201,6 @@
     text-decoration: none;
     flex-shrink: 0;
     white-space: nowrap;
-    margin-left: auto;
   }
 
   .card-barber .project-direct-btn {
@@ -1198,6 +1236,21 @@
     box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
   }
 
+  /* No Mobile Estreito (< 640px): Botão do projeto fica abaixo em largura 100% confortável */
+  @media (max-width: 640px) {
+    .project-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .project-direct-btn {
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 12.5px;
+    }
+  }
+
   .project-overview-text {
     font-size: 13px;
     color: var(--text-dim);
@@ -1208,8 +1261,9 @@
   .project-mods-grid {
     margin-top: 14px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 10px;
+    width: 100%;
   }
 
   .project-mod-box {
@@ -1217,6 +1271,7 @@
     background: var(--panel-solid);
     border-radius: var(--radius-sm);
     border: 1px solid var(--line);
+    min-width: 0;
   }
 
   .mod-title {
@@ -1243,23 +1298,26 @@
     flex-direction: column;
     gap: 16px;
     margin-top: 14px;
+    width: 100%;
   }
 
   .lang-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
   }
 
   .lang-label {
-    width: 100px;
-    font-size: 14px;
+    width: 90px;
+    font-size: 13.5px;
     font-weight: 600;
+    flex-shrink: 0;
   }
 
   .lang-track {
     flex: 1;
+    min-width: 0;
     height: 7px;
     background: var(--bg-alt);
     border: 1px solid var(--line);
@@ -1276,11 +1334,12 @@
   }
 
   .lang-val {
-    width: 90px;
+    width: 80px;
     text-align: right;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-dim);
+    flex-shrink: 0;
   }
 
   /* Rodapé Tecnológico */
@@ -1290,6 +1349,7 @@
     border-top: 1px solid var(--line);
     background: rgba(7, 9, 14, 0.7);
     backdrop-filter: blur(10px);
+    width: 100%;
   }
 
   .footer-content {
@@ -1299,15 +1359,15 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    font-size: 12.5px;
+    gap: 14px;
+    font-size: 12px;
     color: var(--text-muted);
   }
 
   .footer-links {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
 
   .footer-links a {
@@ -1319,7 +1379,7 @@
     color: var(--accent);
   }
 
-  /* Toast de Notificação (ex: copiado com sucesso) */
+  /* Toast de Notificação */
   .toast {
     position: fixed;
     bottom: 24px;
@@ -1340,6 +1400,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    max-width: 90%;
+    text-align: center;
   }
 
   .toast.show {
@@ -1357,30 +1419,19 @@
 
 <div class="app-container">
 
-  <!-- BARRA DE CONTROLE SUPERIOR (Alternador Desktop/Mobile) -->
+  <!-- BARRA DE TOPO NATIVA (Sem botões manuais) -->
   <header class="top-control-bar">
     <div class="top-control-content">
       <div class="top-brand">
         <span class="live-indicator"><span class="live-dot"></span>NOC 24/7 ONLINE</span>
-        <span style="opacity:0.4;">|</span>
-        <span>pablo.dev/terminal</span>
+        <span class="brand-divider">|</span>
+        <span class="brand-path">pablo.dev/terminal</span>
       </div>
-
-      <!-- Alternador de Visualização -->
-      <div class="view-switchers" role="group" aria-label="Modo de visualização">
-        <button class="view-btn active" id="btnModeDesktop" title="Modo Expandido para Desktop / Telas Largas">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          <span>Desktop</span>
-        </button>
-        <button class="view-btn" id="btnModeMobile" title="Modo Compacto Estilo Linktree Mobile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-          <span>Mobile</span>
-        </button>
-      </div>
+      <div class="top-location">São Paulo, SP · BR</div>
     </div>
   </header>
 
-  <!-- CORPO PRINCIPAL COM LAYOUT RESPONSIVO INTELIGENTE -->
+  <!-- CORPO PRINCIPAL COM LAYOUT 100% RESPONSIVO E FLUIDO -->
   <main class="layout-wrapper">
     <div class="desktop-grid">
 
@@ -1468,14 +1519,14 @@
       <!-- COLUNA PRINCIPAL DIREITA: Links Rápidos, Projetos, Experiência & Skills -->
       <div class="main-content">
 
-        <!-- BLOCO 01: LINKS DO LINKTREE (Com as Logos Oficiais Leves) -->
+        <!-- BLOCO 01: LINKS DO LINKTREE -->
         <section class="links-section" aria-label="Links principais">
           <div class="section-label-bar">
             <span class="section-tag-prefix">PROJETOS &amp; LINKS PRINCIPAIS</span>
             <span class="action-hint">Acesse os sistemas em produção</span>
           </div>
 
-          <!-- Projeto 1: DUB Barbeiro (Logo Oficial Preta / Branco) -->
+          <!-- Projeto 1: DUB Barbeiro (Logo Oficial / Branco) -->
           <a class="link-card theme-barber" href="https://barbeirodub.lovable.app" target="_blank" rel="noopener">
             <div class="link-icon-box project-logo-box">
               <img src="assets/dub-barbeiro.jpg" alt="Logo DUB Barbeiro" class="project-img-thumb">
@@ -1485,14 +1536,14 @@
                 <span>DUB Barbeiro · Painel de Gestão</span>
                 <span class="project-tag-pill">Gestão</span>
               </div>
-              <div class="link-sub">barbeirodub.lovable.app · Agenda, encaixes, faturamento e equipe</div>
+              <div class="link-sub">barbeirodub.lovable.app · Agenda, encaixes e equipe</div>
             </div>
             <div class="link-arrow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
           </a>
 
-          <!-- Projeto 2: DUB Cliente (Logo Oficial Vermelha / Vermelho) -->
+          <!-- Projeto 2: DUB Cliente (Logo Oficial / Vermelho) -->
           <a class="link-card theme-client" href="https://dubagenda.lovable.app" target="_blank" rel="noopener">
             <div class="link-icon-box project-logo-box">
               <img src="assets/dub-cliente.png" alt="Logo DUB Cliente" class="project-img-thumb">
@@ -1502,14 +1553,14 @@
                 <span>DUB Cliente · Agendamento Online</span>
                 <span class="project-tag-pill">Clientes</span>
               </div>
-              <div class="link-sub">dubagenda.lovable.app · Agendamento 24/7, serviços e clube grátis</div>
+              <div class="link-sub">dubagenda.lovable.app · Agendamento 24/7 e serviços</div>
             </div>
             <div class="link-arrow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
           </a>
 
-          <!-- Projeto 3: Mr Caseiro (Logo Oficial Dourada / Dourado Âmbar) -->
+          <!-- Projeto 3: Mr Caseiro (Logo Oficial / Dourado Âmbar) -->
           <a class="link-card theme-food" href="https://mrcardapio.lovable.app" target="_blank" rel="noopener">
             <div class="link-icon-box project-logo-box">
               <img src="assets/mr-caseiro.png" alt="Logo Mr Caseiro" class="project-img-thumb mr-caseiro-img">
@@ -1571,7 +1622,7 @@
           </a>
         </section>
 
-        <!-- BLOCO 02: PROJETOS EM DESTAQUE (Com Logos Oficiais, sem // e cores ajustadas) -->
+        <!-- BLOCO 02: PROJETOS EM DESTAQUE -->
         <section class="section-container" id="projeto">
           <div class="section-head">
             <div class="section-title-wrap">
@@ -1896,45 +1947,11 @@
 
 <script>
 (function() {
-  // Ano no rodapé
+  // Ano dinâmico no rodapé
   var yr = document.getElementById('year');
   if (yr) yr.textContent = new Date().getFullYear();
 
-  // 1. Alternador de Modo Desktop Widescreen vs Mobile
-  var btnDesktop = document.getElementById('btnModeDesktop');
-  var btnMobile = document.getElementById('btnModeMobile');
-  var body = document.body;
-
-  function setMode(mode) {
-    if (mode === 'mobile') {
-      body.classList.add('mode-mobile');
-      btnMobile.classList.add('active');
-      btnDesktop.classList.remove('active');
-    } else {
-      body.classList.remove('mode-mobile');
-      btnDesktop.classList.add('active');
-      btnMobile.classList.remove('active');
-    }
-    try {
-      localStorage.setItem('pablo_preferred_mode', mode);
-    } catch(e) {}
-  }
-
-  if (btnDesktop && btnMobile) {
-    btnDesktop.addEventListener('click', function() { setMode('desktop'); });
-    btnMobile.addEventListener('click', function() { setMode('mobile'); });
-
-    try {
-      var saved = localStorage.getItem('pablo_preferred_mode');
-      if (saved) {
-        setMode(saved);
-      } else if (window.innerWidth < 800) {
-        setMode('mobile');
-      }
-    } catch(e) {}
-  }
-
-  // 2. Animação de Digitação Hacker no Nome
+  // Animação de Digitação Hacker no Nome
   var fullText = "Pablo Silva Ferreira";
   var elTyped = document.getElementById('typedText');
   var idx = 0;
@@ -1952,7 +1969,7 @@
     runTypewriter();
   }
 
-  // 3. Efeito Direcionar e Iluminar (Currículo)
+  // Efeito Direcionar e Iluminar (Currículo)
   function setupSmoothScrollHighlight(triggerId, targetId) {
     var trigger = document.getElementById(triggerId);
     if (!trigger) return;
@@ -1970,7 +1987,7 @@
 
   setupSmoothScrollHighlight('btnGoToCurriculo', 'curriculo');
 
-  // 4. Copiar E-mail com Toast
+  // Copiar E-mail com Toast
   var btnCopyEmail = document.getElementById('btnCopyEmail');
   var toast = document.getElementById('toast');
   var toastMsg = document.getElementById('toastMsg');
@@ -1999,7 +2016,7 @@
     });
   }
 
-  // 5. Barras de Idioma Animadas ao Rolar
+  // Barras de Idioma Animadas ao Rolar
   var bars = document.querySelectorAll('.lang-bar-fill');
   if ('IntersectionObserver' in window) {
     var langObs = new IntersectionObserver(function(entries) {
@@ -2016,27 +2033,33 @@
     bars.forEach(function(b) { b.style.width = b.getAttribute('data-pct') + '%'; });
   }
 
-  // 6. Spotlight Cursor Tech
-  var spotlight = document.getElementById('cursorSpotlight');
-  var mousePos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  // Spotlight Cursor Tech (Apenas em desktop com mouse)
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var spotlight = document.getElementById('cursorSpotlight');
+    window.addEventListener('mousemove', function(e) {
+      if (spotlight) {
+        spotlight.style.left = e.clientX + 'px';
+        spotlight.style.top = e.clientY + 'px';
+      }
+    });
+  }
 
-  window.addEventListener('mousemove', function(e) {
-    mousePos.x = e.clientX;
-    mousePos.y = e.clientY;
-    if (spotlight) {
-      spotlight.style.left = e.clientX + 'px';
-      spotlight.style.top = e.clientY + 'px';
-    }
-  });
-
-  // 7. Canvas Interativo Tech (Partículas, Nós & Malha Minimalista)
+  // Canvas Interativo Tech (Partículas, Nós & Malha Minimalista)
   var canvas = document.getElementById('bg-canvas');
   if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var ctx = canvas.getContext('2d');
     var width, height;
     var particles = [];
-    var particleCount = 42;
-    var maxDistance = 140;
+    var particleCount = 40;
+    var maxDistance = 135;
+    var mousePos = { x: -1000, y: -1000 };
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      window.addEventListener('mousemove', function(e) {
+        mousePos.x = e.clientX;
+        mousePos.y = e.clientY;
+      });
+    }
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -2046,15 +2069,15 @@
 
     function initParticles() {
       particles = [];
-      var count = width < 768 ? 24 : particleCount;
+      var count = width < 768 ? 20 : particleCount;
       for (var i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 1.6 + 1.2,
-          alpha: Math.random() * 0.5 + 0.2
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 1.5 + 1.1,
+          alpha: Math.random() * 0.45 + 0.2
         });
       }
     }
@@ -2073,20 +2096,22 @@
         if (p1.x < 0 || p1.x > width) p1.vx *= -1;
         if (p1.y < 0 || p1.y > height) p1.vy *= -1;
 
-        var dxMouse = mousePos.x - p1.x;
-        var dyMouse = mousePos.y - p1.y;
-        var distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-        if (distMouse < 180) {
-          var force = (180 - distMouse) / 180 * 0.02;
-          p1.vx += (dxMouse / distMouse) * force;
-          p1.vy += (dyMouse / distMouse) * force;
+        if (mousePos.x > 0) {
+          var dxMouse = mousePos.x - p1.x;
+          var dyMouse = mousePos.y - p1.y;
+          var distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+          if (distMouse < 160) {
+            var force = (160 - distMouse) / 160 * 0.02;
+            p1.vx += (dxMouse / distMouse) * force;
+            p1.vy += (dyMouse / distMouse) * force;
+          }
         }
 
         ctx.beginPath();
         ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(56, 189, 248, ' + p1.alpha + ')';
         ctx.shadowColor = 'rgba(56, 189, 248, 0.4)';
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 5;
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -2097,7 +2122,7 @@
           var dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            var lineAlpha = (1 - dist / maxDistance) * 0.16;
+            var lineAlpha = (1 - dist / maxDistance) * 0.15;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
