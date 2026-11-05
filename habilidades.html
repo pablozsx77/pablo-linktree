@@ -592,7 +592,7 @@
     opacity: 0.8;
   }
 
-  /* Sidebar / social quick buttons */
+  /* --- Barra Lateral: Ações Rápidas e Cartão GitHub (Premium / Minimalista) --- */
   .social-quick-btn svg {
     width: 12px;
     height: 12px;
@@ -609,6 +609,139 @@
   .gh-icon-box svg {
     width: 13px;
     height: 13px;
+  }
+
+  /* Sidebar social actions container */
+  .sidebar-social-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .social-quick-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.15);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .social-quick-btn:hover {
+    border-color: var(--accent);
+    background: rgba(56, 189, 248, 0.05);
+    color: var(--accent);
+    transform: translateX(-3px);
+  }
+
+  .social-quick-btn[href*="wa.me"] {
+    color: #25d366;
+    border-color: rgba(37, 211, 102, 0.2);
+    background: rgba(37, 211, 102, 0.06);
+  }
+
+  .social-quick-btn[href*="wa.me"]:hover {
+    background: #25d366;
+    color: #ffffff;
+    border-color: #25d366;
+    transform: translateX(-3px);
+  }
+
+  .sidebar-cv-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 6px;
+  }
+
+  .sidebar-cv-btn:hover {
+    border-color: var(--accent);
+    background: rgba(56, 189, 248, 0.05);
+    color: var(--accent);
+    transform: translateX(-3px);
+  }
+
+  .github-profile-card {
+    display: block;
+    padding: 16px 18px;
+    border-top: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .github-profile-card:hover {
+    background: rgba(56, 189, 248, 0.03);
+    border-color: var(--accent);
+  }
+
+  .gh-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .gh-card-header div:last-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .gh-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .gh-user {
+    font-size: 11px;
+    color: var(--accent);
+    margin: 0;
+    font-family: var(--mono);
+  }
+
+  .gh-card-body {
+    margin: 0 0 12px 0;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .gh-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .gh-badge {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text-muted);
   }
 
   /* Grid de Tecnologias */
@@ -781,7 +914,7 @@
               <!-- Ações Rápidas -->
               <div class="sidebar-social-actions">
                 <a href="https://wa.me/5511911782999" target="_blank" rel="noopener" class="social-quick-btn" title="Conversar no WhatsApp">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"></path></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="11" width="17" height="6" rx="3" ry="3"/><path d="M2 15l-1 4"/><rect x="12" y="11.5" width="3" height="3" rx="1" ry="1"/><circle cx="13.5" cy="13" r="0.5" fill="currentColor"/></svg>
                   <span>WhatsApp</span>
                 </a>
 
