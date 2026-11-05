@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pablo Silva Ferreira · Habilidades Técnicas</title>
+<meta name="description" content="Pablo Silva Ferreira · Desenvolvedor de Sistemas e Automações com IA - Habilidades Técnicas detalhadas">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #07090e;
+    --bg: #0b0f17;
+    --bg-alt: #101622;
+    --panel: rgba(18, 24, 38, 0.75);
+    --panel-solid: #131a29;
+    --panel-hover: rgba(26, 35, 53, 0.85);
+    --line: rgba(56, 189, 248, 0.12);
+    --line-active: rgba(56, 189, 248, 0.35);
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #38bdf8;
+    --accent-glow: rgba(56, 189, 248, 0.35);
+    --accent-dim: #0284c7;
+    --accent-soft: rgba(56, 189, 248, 0.08);
+    --accent-success: #10b981;
+
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--line);
+    --shadow-glow: 0 0 35px -5px rgba(56, 189, 248, 0.18);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 30px;
+    height: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    background-color: var(--bg-deep);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+  }
+
+  /* Canvas de Fundo Interativo Tech */
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  /* Malha sutil de grid cibernético */
+  .tech-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
+  }
+
+  @media (hover: none), (max-width: 768px) {
+    .cursor-spotlight {
+      display: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+    #bg-canvas { display: none; }
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  ::selection {
+    background: var(--accent);
+    color: #04111d;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Container Principal */
+  .app-container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Barra de Topo Fina & Limpa (Sem alternadores manuais) */
+  .top-control-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 15, 23, 0.85);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  .top-control-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+192    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .top-brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text-dim);
+  }
+
+  .brand-divider {
+    opacity: 0.35;
+  }
+
+  .brand-path {
+    color: var(--text-muted);
+  }
+
+  .top-location {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    font-size: 11px;
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 8px #34d399;
+    animation: livePulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot {
+      animation: none;
+    }
+  }
+
+  /* Layout Wrapper Fluido */
+  .layout-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+  }
+
+  @media (max-width: 480px) {
+    .layout-wrapper {
+      padding: 16px 14px 60px;
+    }
+  }
+
+  /* RESPONSIVIDADE AUTOMÁTICA NATIVA (Sem intervenção manual) */
+  /* Telas Desktop (> 960px): 2 colunas com sidebar fixa */
+  @media (min-width: 961px) {
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .profile-sidebar {
+      position: sticky;
+      top: 66px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  /* Telas Mobile e Tablets (<= 960px): Coluna única centrada */
+  @media (max-width: 960px) {
+    .layout-wrapper {
+      max-width: 640px;
+    }
+
+    .desktop-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .profile-sidebar {
+      position: static;
+      width: 100%;
+    }
+  }
+
+  /* Terminal Card */
+  .term-card {
+    background: var(--panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    width: 100%;
+  }
+
+  .term-card:hover {
+    border-color: var(--line-active);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+  }
+
+  .term-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    background: rgba(16, 22, 34, 0.9);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .term-dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .term-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+
+  .term-dot.r { background: #ff5f56; opacity: 0.85; }
+  .term-dot.y { background: #ffbd2e; opacity: 0.85; }
+  .term-dot.g { background: #27c93f; opacity: 0.85; }
+
+  .term-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+
+  .term-body {
+    padding: 22px 18px;
+  }
+
+  .profile-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .terminal-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    white-space: nowrap;
+  }
+
+  .profile-name {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    word-break: break-word;
+  }
+
+  .caret {
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    margin-left: 4px;
+    box-shadow: 0 0 10px var(--accent);
+    animation: blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .profile-role {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .profile-location {
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .profile-bio {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Seção de Habilidades */
+  .skills-page {
+    flex: 1;
+  }
+
+  .section-container {
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  @media (max-width: 480px) {
+    .section-container {
+      padding: 18px 14px;
+    }
+  }
+
+  .section-container.highlight-pulse {
+    animation: targetGlow 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes targetGlow {
+    0% {
+      border-color: var(--accent);
+      box-shadow: 0 0 45px rgba(56, 189, 248, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.15);
+      transform: scale(1.01);
+    }
+    100% {
+      border-color: var(--line);
+      box-shadow: var(--shadow-card);
+      transform: scale(1);
+    }
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .section-title-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+
+  .section-badge-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Grade de Habilidades */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 24px;
+    width: 100%;
+  }
+
+  .skill-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.25s ease;
+    width: 100%;
+  }
+
+  .skill-card:hover {
+    border-color: var(--accent-dim);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+  }
+
+  .skill-category {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    display: inline-block;
+  }
+
+  .skill-category::after {
+    content: "";
+    display: block;
+    width: 40%;
+    height: 1px;
+    background: var(--line);
+    margin-top: 6px;
+  }
+
+  .skill-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .skill-title svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .skill-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .skill-level {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: var(--panel-solid);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+
+  .skill-level strong {
+    color: var(--accent);
+    font-family: var(--mono);
+    margin-right: 8px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--panel-solid);
+    color: var(--text);
+    font-family: var(--mono);
+    transition: all 0.15s ease;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent-dim);
+    color: #ffffff;
+    background: rgba(56, 189, 248, 0.08);
+  }
+
+  .skill-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  /* Grid de Tecnologias */
+  .tech-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .tech-item {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+
+  .tech-item:hover {
+    border-color: var(--accent-dim);
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .tech-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--panel-solid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+  }
+
+  .tech-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+  }
+
+  .tech-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tech-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+  .tech-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* Referências */
+  .ref-section {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .ref-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items;
+    gap: 6px;
+  }
+
+  .ref-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ref-item {
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--panel-solid);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 480px) {
+    .skills-grid {
+      gap: 16px;
+    }
+
+    .skill-card {
+      padding: 16px;
+    }
+
+    .tech-item {
+      padding: 12px 16px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Canvas com Partículas e Conexões Tech Interativas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="tech-grid-overlay"></div>
+
+  <div class="app-container">
+
+    <!-- BARRA DE TOPO NATIVA (Sem botões manuais) -->
+    <header class="top-control-bar">
+      <div class="top-control-content">
+        <div class="top-brand">
+          <span class="live-indicator"><span class="live-dot"></span>NOC 24/7 ONLINE</span>
+          <span class="brand-divider">|</span>
+          <span class="brand-path">pablo.dev/terminal</span>
+        </div>
+        <div class="top-location">São Paulo, SP · BR</div>
+      </div>
+    </header>
+
+    <!-- CORPO PRINCIPAL COM LAYOUT 100% RESPONSIVO E FLUIDO -->
+    <main class="layout-wrapper">
+      <div class="desktop-grid">
+
+        <!-- COLUNA LATERAL ESQUERDA: Perfil, Terminal & GitHub -->
+        <aside class="profile-sidebar">
+          <div class="term-card">
+            <div class="term-header">
+              <div class="term-dots">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+              </div>
+              <div class="term-meta">~/pablo-silva/profile.zsh</div>
+            </div>
+
+            <div class="term-body">
+              <div class="profile-badge-row">
+                <span class="terminal-tag">v2.4-stable</span>
+                <span class="terminal-tag">Full-Stack & AI</span>
+              </div>
+
+              <h1 class="profile-name" id="typedName">
+                <span id="typedText"></span><span class="caret"></span>
+              </h1>
+
+              <div class="profile-role">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <span>Dev & Automações com IA</span>
+              </div>
+
+              <div class="profile-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>São Paulo, SP · Português nativo</span>
+              </div>
+
+              <p class="profile-bio">
+                Especialista no desenvolvimento de sistemas com IA generativa, fluxos avançados no N8N e monitoramento proativo de ambientes de infraestrutura de TI 24/7 (Zabbix & Grafana).
+              </p>
+
+              <!-- Ações Rápidas -->
+              <div class="sidebar-social-actions">
+                <a href="https://wa.me/5511911782999" target="_blank" rel="noopener" class="social-quick-btn" title="Conversar no WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"></path></svg>
+                  <span>WhatsApp</span>
+                </a>
+
+                <a href="https://github.com/pablozsx77" target="_blank" rel="noopener" class="social-quick-btn" title="Abrir Perfil no GitHub">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>GitHub</span>
+                </a>
+
+                <button type="button" class="social-quick-btn" id="btnCopyEmail" title="Copiar e-mail para a área de transferência">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span id="copyEmailText">Copiar E-mail</span>
+                </button>
+              </div>
+
+              <a href="assets/curriculo-pablo-silva.pdf" download="curriculo-pablo-silva.pdf" target="_blank" class="sidebar-cv-btn" title="Respirance currículo">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Respirance currículo</span>
+              </a>
+            </div>
+
+            <!-- Card Exclusivo do GitHub -->
+            <a href="https://github.com/pablozsx77" target="_blank" rel="noopener" class="github-profile-card">
+              <div class="gh-card-header">
+                <div class="gh-identity">
+                  <div class="gh-icon-box">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                  </div>
+                  <div>
+                    <div class="gh-title">GitHub Oficial</div>
+                    <div class="gh-user">@pablozsx77</div>
+                  </div>
+                </div>
+                <span style="color:var(--accent);">↗</span>
+              </div>
+              <p class="gh-card-body">
+                Explore meus repositórios com automações em N8N, integrações com LLMs, scripts em Python e arquitetura de sistemas.
+              </p>
+              <div class="gh-badges">
+                <span class="gh-badge">★ Repositórios</span>
+                <span class="gh-badge">⚡ N8N Workflows</span>
+                <span class="gh-badge">🤖 IA Agentes</span>
+              </div>
+            </a>
+          </div>
+        </aside>
+
+        <!-- COLUNA PRINCIPAL DIREITA -->
+        <div class="main-content">
+
+          <!-- BLOCO 01: HABILIDADES -->
+          <section class="skills-page">
+            <div class="section-container" id="habilidades">
+              <div class="section-head">
+                <div class="section-title-wrap">
+                  <span class="section-tag">04</span>
+                  <h2 class="section-title">Habilidades Técnicas</h2>
+                </div>
+                <span class="section-badge-right">COMPETÊNCIAS</span>
+              </div>
+
+              <div class="skills-grid">
+
+                <!-- IA & AUTOMATION -->
+                <div class="skill-card">
+                  <div class="skill-category">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>IA & Automação</span>
+                  </div>
+                  <div class="skill-title">
+                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    Inteligência Artificial e Automação
+                  </div>
+                  <p class="skill-desc">
+                    Desenvolvimento de agentes autônomos de IA para atendimento, triagem e integração com CRMs. Implementação de pipelines de dados inteligentes utilizando LLMs (OpenAI, Anthropic) para reduzir custos operacionais de clientes. Criação de fluxos no N8N que conectam múltiplos webhooks, gateways de pagamento e serviços externos.
+                  </p>
+                  <div class="skill-level">
+                    <strong>Nível: </strong>Intermediário a Avançado
+                  </div>
+                  <div class="skill-tags">
+                    <span class="skill-tag">N8N Workflows</span>
+                    <span class="skill-tag">Agentes de IA</span>
+                    <span class="skill-tag">OpenAI / LLMs</span>
+                    <span class="skill-tag">Anthropic / Claude</span>
+                    <span class="skill-tag">Webhooks</span>
+                    <span class="skill-tag">APIs RESTful</span>
+                  </div>
+                </div>
+
+                <!-- NOC & INFRAESTRUCTURE -->
+                <div class="skill-card">
+                  <div class="skill-category">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    <span>NOC & Infraestrutura</span>
+                  </div>
+                  <div class="skill-title">
+                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    Monitoramento e Infraestrutura de TI
+                  </div>
+                  <p class="skill-desc">
+                    Monitoramento contínuo de infraestrutura crítica de TI usando Zabbix e Grafana. Análise de alertas em tempo real e identificação de incidentes operacionais. Gestão rigorosa de tickets e SLA: classificação, triagem e encaminhamento seguro de chamados. Experiência com escala 12x36 e ambientes 100% Home Office.
+                  </p>
+                  <div class="skill-level">
+                    <strong>Nível: </strong>Básico/Intermediário
+                  </div>
+                  <div class="skill-tags">
+                    <span class="skill-tag">Zabbix</span>
+                    <span class="skill-tag">Grafana</span>
+                    <span class="skill-tag">Monitoramento 24/7</span>
+                    <span class="skill-tag">Incident Response</span>
+                    <span class="skill-tag">Linux / Terminal</span>
+                    <span class="skill-tag">SLA Management</span>
+                  </div>
+                </div>
+
+                <!-- DESENVOLVIMENTO & SOFT SKILLS -->
+                <div class="skill-card">
+                  <div class="skill-category">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg>
+                    <span>Desenvolvimento & Soft Skills</span>
+                  </div>
+                  <div class="skill-title">
+                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg>
+                    Desenvolvimento de Software e Competências Comportamentais
+                  </div>
+                  <p class="skill-desc">
+                    Desenvolvimento full-stack com foco em JavaScript/TypeScript, arquitetura de sistemas e design de banco de dados. Construção de módulos de regras de negócio, autenticação RBAC e segurança de dados. Forte ênfase em comunicação técnica, resolução ágil de problemas e visão de negócios para alinhamento de expectativas com stakeholders.
+                  </p>
+                  <div class="skill-level">
+                    <strong>Nível: </strong>Intermediário a Avançado
+                  </div>
+                  <div class="skill-tags">
+                    <span class="skill-tag">JavaScript / TypeScript</span>
+                    <span class="skill-tag">Git & GitHub</span>
+                    <span class="skill-tag">Arquitetura de Sistemas</span>
+                    <span class="skill-tag">Metodologias Ágeis</span>
+                    <span class="skill-tag">Comunicação Técnica</span>
+                    <span class="skill-tag">Visão de Negócios</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Referências -->
+              <div class="ref-section">
+                <div class="ref-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4l1-3h-2l1-3h-2l1-3h-2l1-3h-2l1-3h-4l1-3h22l1 3h2l1 3h2l1 3h2l1 3h2l1 3h2l1 3h2l1 3h2l1 3h-4l1 3c0 1.1-.9 2-2 2z"></path><circle cx="12" cy="7" r="3"></circle></svg>
+                  Referências e Ferramentas
+                </div>
+                <div class="ref-list">
+                  <span class="ref-item">N8N Documentation</span>
+                  <span class="ref-item">Zabbix Documentation</span>
+                  <span class="ref-item">Grafana Documentation</span>
+                  <span class="ref-item">OpenAI API</span>
+                  <span class="ref-item">Anthropic Claude</span>
+                  <span class="ref-item">Git & GitHub</span>
+                  <span class="ref-item">Docker & Containers</span>
+                  <span class="ref-item">AWS / Cloud Fundamentals</span>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- RODAPÉ MODERNO TECH -->
+    <footer>
+      <div class="footer-content">
+        <div>
+          <span>Pablo Silva Ferreira © <span id="year">2026</span> · Desenvolvedor & NOC Analyst</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/pablozsx77" target="_blank" rel="noopener">GitHub</a>
+          <span>·</span>
+          <a href="https://wa.me/5511911782999" target="_blank" rel="noopener">WhatsApp</a>
+          <span>·</span>
+          <a href="mailto:pablosilva.empree@gmail.com">E-mail</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Feedback -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toastMsg">E-mail copiado!</span>
+  </div>
+
+  <script>
+  (function() {
+    // Ano dinâmico no rodapé
+    var yr = document.getElementById('year');
+    if (yr) yr.textContent = new Date().getFullYear();
+
+    // Animação de Digitação Hacker no Nome
+    var fullText = "Pablo Silva Ferreira";
+    var elTyped = document.getElementById('typedText');
+    var idx = 0;
+    function runTypewriter() {
+      if (idx <= fullText.length) {
+        if (elTyped) elTyped.textContent = fullText.slice(0, idx);
+        idx++;
+        setTimeout(runTypewriter, 50);
+      }
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (elTyped) elTyped.textContent = fullText;
+    } else {
+      runTypewriter();
+    }
+
+    // Efeito Direcionar e Iluminar (Currículo)
+    function setupSmoothScrollHighlight(triggerId, targetId) {
+      var trigger = document.getElementById(triggerId);
+      if (!trigger) return;
+      trigger.addEventListener('click', function(e) {
+        var target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.classList.remove('highlight-pulse');
+          void target.offsetWidth;
+          target.classList.add('highlight-pulse');
+        }
+      });
+    }
+
+    setupSmoothScrollHighlight('btnGoToCurriculo', 'curriculo');
+
+    // Copiar E-mail com Toast
+    var btnCopyEmail = document.getElementById('btnCopyEmail');
+    var toast = document.getElementById('toast');
+    var toastMsg = document.getElementById('toastMsg');
+
+    function showToast(text) {
+      if (!toast) return;
+      if (toastMsg) toastMsg.textContent = text;
+      toast.classList.add('show');
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 2800);
+    }
+
+    if (btnCopyEmail) {
+      btnCopyEmail.addEventListener('click', function() {
+        var email = 'pablosilva.empree@gmail.com';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(function() {
+            showToast('✓ E-mail copiado com sucesso!');
+          }).catch(function() {
+            window.location.href = 'mailto:' + email;
+          });
+        } else {
+          window.location.href = 'mailto:' + email;
+        }
+      });
+    }
+
+    // Barras de Idioma Animadas ao Rolar
+    var bars = document.querySelectorAll('.lang-bar-fill');
+    if ('IntersectionObserver' in window) {
+      var langObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var bar = entry.target;
+            bar.style.width = bar.getAttribute('data-pct') + '%';
+            langObs.unobserve(bar);
+          }
+        });
+      }, { threshold: 0.3 });
+      bars.forEach(function(b) { langObs.observe(b); });
+    } else {
+      bars.forEach(function(b) { b.style.width = b.getAttribute('data-pct') + '%'; });
+    }
+
+    // Spotlight Cursor Tech (Apenas em desktop com mouse)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var spotlight = document.getElementById('cursorSpotlight');
+      window.addEventListener('mousemove', function(e) {
+        if (spotlight) {
+          spotlight.style.left = e.clientX + 'px';
+          spotlight.style.top = e.clientY + 'px';
+        }
+      });
+    }
+
+    // Canvas Interativo Tech (Partículas, Nós & Malha Minimalista)
+    var canvas = document.getElementById('bg-canvas');
+    if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var ctx = canvas.getContext('2d');
+      var width, height;
+      var particles = [];
+      var particleCount = 40;
+      var maxDistance = 135;
+      var mousePos = { x: -1000, y: -1000 };
+
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        window.addEventListener('mousemove', function(e) {
+          mousePos.x = e.clientX;
+          mousePos.y = e.clientY;
+        });
+      }
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
+      }
+
+      function initParticles() {
+        particles = [];
+        var count = width < 768 ? 20 : particleCount;
+        for (var i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            radius: Math.random() * 1.5 + 1.1,
+            alpha: Math.random() * 0.45 + 0.2
+          });
+        }
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+
+      function renderCanvas() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (var i = 0; i < particles.length; i++) {
+          var p1 = particles[i];
+          p1.x += p1.vx;
+          p1.y += p1.vy;
+
+          if (p1.x < 0 || p1.x > width) p1.vx *= -1;
+          if (p1.y < 0 || p1.y > height) p1.vy *= -1;
+
+          if (mousePos.x > 0) {
+            var dxMouse = mousePos.x - p1.x;
+            var dyMouse = mousePos.y - p1.y;
+            var distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+            if (distMouse < 160) {
+              var force = (160 - distMouse) / 160 * 0.02;
+              p1.vx += (dxMouse / distMouse) * force;
+              p1.vy += (dyMouse / distMouse) * force;
+            }
+          }
+
+          ctx.beginPath();
+          ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(56, 189, 248, ' + p1.alpha + ')';
+          ctx.shadowColor = 'rgba(56, 189, 248, 0.4)';
+          ctx.shadowBlur = 5;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          for (var j = i + 1; j < particles.length; j++) {
+            var p2 = particles[j];
+            var dx = p1.x - p2.x;
+            var dy = p1.y - p2.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < maxDistance) {
+              var lineAlpha = (1 - dist / maxDistance) * 0.15;
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = 'rgba(56, 189, 248, ' + lineAlpha + ')';
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(renderCanvas);
+      }
+
+      renderCanvas();
+    }
+  })();
+  </script>
+</body>
+</html>
